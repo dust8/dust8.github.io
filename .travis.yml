@@ -8,25 +8,37 @@ env:
   global:
     - GH_REF=github.com/dust8/dust8.github.io
 
-install:
-  - npm install
+before_install:
+  - git config user.name "dust8"
+  - git config user.email "adbcdust@gmail.com"
 
-before_script:
- - npm install -g gulp
+install:
+  - npm install hexo-cli -g
+  - npm install hexo --save
+  - npm install
+  - npm install hexo-generator-feed --save
+  - npm install hexo-deployer-git --save
+  - npm install hexo-renderer-ejs --save
+  - npm install hexo-renderer-stylus --save
+  - npm install hexo-renderer-marked --save
+  - npm install hexo-renderer-sass --save
 
 script:
-  - hexo g
+  - hexo clean
+  - hexo generate
 
 after_script:
   - cd ./public
   - git init
-  - git config user.name "dust8"
-  - git config user.email "adbcdust@gmail.com"
-  - git add .
-  - git commit -m "Update docs"
-  - git push --force "https://${GH_TOKEN}@${GH_REF}" master:master
+  - git add --all .
+  - git commit -m "Travis CI Auto Builder"
+  - git push --force "https://${GH_TOKEN}@${GH_REF}" master
 
 # Building Specific Branches
 branches:
   only:
     - blog-source
+
+cache:
+  directories:
+    - node_modules
