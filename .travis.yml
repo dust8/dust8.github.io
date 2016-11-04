@@ -1,6 +1,20 @@
 language: node_js
 node_js:
-  - "6.1"
+  - "4"
+
+# Environment Variables
+env:
+  - CXX=g++-4.8
+  # Global Variables
+  global:
+    - GH_REF=github.com/dust8/dust8.github.io
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 
 install:
   - npm install
@@ -24,9 +38,3 @@ after_script:
 branches:
   only:
     - blog-source
-
-# Environment Variables
-env:
-  # Global Variables
-  global:
-    - GH_REF=github.com/dust8/dust8.github.io
