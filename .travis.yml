@@ -8,10 +8,6 @@ env:
   global:
     - GH_REF=github.com/dust8/dust8.github.io
 
-before_install:
-  - git config user.name "dust8"
-  - git config user.email "adbcdust@gmail.com"
-
 install:
   - npm install hexo-cli -g
   - npm install hexo --save
@@ -26,6 +22,8 @@ script:
   - hexo generate --debug
 
 after_script:
+  - git config user.name "dust8"
+  - git config user.email "adbcdust@gmail.com"
   - cd ./public
   - git init
   - git add --all .
