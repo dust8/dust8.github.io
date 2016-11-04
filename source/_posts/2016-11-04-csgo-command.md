@@ -1,5 +1,5 @@
 ---
-title: csgo 个人训练命令
+title: csgo个人训练命令
 date: 2016-11-04 05:15:31
 tags:
   - csgo
