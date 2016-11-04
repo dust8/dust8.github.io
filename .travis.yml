@@ -22,7 +22,7 @@ install:
 
 script:
   - hexo clean
-  - hexo generate
+  - hexo generate --debug
 
 after_script:
   - cd ./public
