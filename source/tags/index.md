@@ -1,6 +1,6 @@
 ---
-title: 标签
+title: tags
 date: 2016-06-01 18:49:21
-type: "tags"
+layout: tags
 comments: false
 ---
