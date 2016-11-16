@@ -30,3 +30,20 @@ tags:
     app.py
     app.config.from_pyfile('config.py')
     app.run()
+
+
+还有就是静态文件被缓存了,例如 `css`, `js` 这些文件改动后，刷新网页也看不到改动后的效果.   
+可以在文件名后面加入随机字符, 可以看看 [static url cache buster](http://flask.pocoo.org/snippets/40/).    
+
+    @app.context_processor
+    def override_url_for():
+        return dict(url_for=dated_url_for)
+
+    def dated_url_for(endpoint, **values):
+        if endpoint == 'static':
+            filename = values.get('filename', None)
+            if filename:
+                file_path = os.path.join(app.root_path,
+                                         endpoint, filename)
+                values['q'] = int(os.stat(file_path).st_mtime)
+        return url_for(endpoint, **values)
