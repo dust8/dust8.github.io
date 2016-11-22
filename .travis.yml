@@ -23,7 +23,7 @@ script:
 
 after_script:
   - git config --global user.name "dust8"
-  - git config --global user.email "adbcdust@gmail.com"
+  - git config --global user.email "dust8@users.noreply.github.com"
   - cd ./public
   - git init
   - git add --all .
