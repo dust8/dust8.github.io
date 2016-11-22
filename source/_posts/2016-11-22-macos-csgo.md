@@ -28,5 +28,5 @@ tags:
 
 
 ## 下载地址   
-[smcFanControl](/assert/smcFanControl_2_6.zip)      
+[smcFanControl](/assert/smcfancontrol_2_6.zip)      
 [MouseFixer](/assert/MouseFixer.zip)
