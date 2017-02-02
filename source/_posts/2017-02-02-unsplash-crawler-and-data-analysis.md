@@ -205,6 +205,7 @@ db.py
 
 ### top10 图片大小
 
+    width_heights = [str(p['width'])+'_'+str(p['height']) for p in photos]
     width_heights_counts = get_counts(width_heights)
     print(len(width_heights_counts))
     top_counts(width_heights_counts)
