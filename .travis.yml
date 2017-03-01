@@ -1,5 +1,6 @@
 language: node_js
 node_js:
+  - "iojs"
   - "6"
 
 # Environment Variables
@@ -15,7 +16,7 @@ install:
 
 script:
   - hexo clean
-  - hexo generate --debug
+  - hexo g --debug
 
 after_script:
   - git config --global user.name "dust8"
