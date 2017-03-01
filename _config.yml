@@ -9,7 +9,6 @@ description:
 author: dust8
 language: zh
 timezone:
-since: 2011
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -61,12 +60,15 @@ time_format: HH:mm:ss
 per_page: 0
 pagination_dir: page
 
-# 在归档页面显示所有文章
-# 需要上面安装的 hexo-generator-archive 插件支持
-archive_generator:
-    per_page: 15
-    yearly: false
-    monthly: false
-    daily: false
-
 theme: four
+
+menu:
+  Home: /
+  Archives: /archives
+  About: /about
+
+since: 2010
+
+favicon: /assert/avatar.png
+
+highlight_theme: atom-one-dark

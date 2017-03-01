@@ -1,0 +1,3 @@
+[submodule "themes/four"]
+	path = themes/four
+	url = https://github.com/dust8/hexo-theme-four.git
