@@ -30,3 +30,8 @@ after_script:
 branches:
   only:
     - blog-source
+
+cache:
+  directories:
+    - node_modules
+
