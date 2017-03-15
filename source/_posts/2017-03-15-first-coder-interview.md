@@ -2,8 +2,6 @@
 title: 第一次编程工作面试
 
 date: 2017-03-15 05:15:31
-tags:
-  - work
 ---
 
 ## 前言
@@ -39,6 +37,7 @@ filter_nums(line)
 ### 就是考察django的数据库查询，有2个限制条件
 我没怎么看django，上午在吊水，下午复习了下python基本知识，晚上只看了几章django。
 导致没写出来。回来看了下有3种方法。
+
 - filter(quantity__gt=5, price__lt=10)
 - filter(quantity__gt=5).filter(price__lt=10)
 - filter(Q(quantity__gt=5)&Q(price__lt=10))
@@ -58,7 +57,7 @@ django的内置tags有哪些我还没看过，就用html写了下
     <tr><td>{{ x.x }}</td><td>{{ x.y }}</td></tr>
 {% endfor %}
 ```
-其实 **for** 就是django内置的一种tag，可惜我有点紧张，变量好像还忘记变量加 ** {{}}**。
+其实 **for** 就是django内置的一种tag，可惜我有点紧张，变量好像还忘记变量加双大括号。
 
 ### 有个思考题，说怎么测量路上的通车数量
 回答的不是很好，写了射线类测量，人类计数，图像识别，还要思考他们的准确性和成本。
