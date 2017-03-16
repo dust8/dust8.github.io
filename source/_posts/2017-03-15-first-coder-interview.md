@@ -38,11 +38,11 @@ filter_nums(line)
 我没怎么看django，上午在吊水，下午复习了下python基本知识，晚上只看了几章django。
 导致没写出来。回来看了下有3种方法。
 
-- filter(quantity__gt=5, price__lt=10)
-- filter(quantity__gt=5).filter(price__lt=10)
-- filter(Q(quantity__gt=5)&Q(price__lt=10))
+- `filter(quantity__gt=5, price__lt=10)`
+- `filter(quantity__gt=5).filter(price__lt=10)`
+- `filter(Q(quantity__gt=5)&Q(price__lt=10))`
 
-### 叫用django的内置tags来写歌表格
+### 叫用django的内置tags来写个表格
 django的内置tags有哪些我还没看过，就用html写了下
 ```html
 <table>
