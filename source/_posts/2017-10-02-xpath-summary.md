@@ -5,11 +5,11 @@ tags:
  - xpath
 ---
 
-# 我是调试 xpath 的
+# 怎么调试 xpath 的
 不喜欢用正则，感觉用有时用 xpath 简单很多。  
 ![](/assert/2017-10-02.png)
 
-# 我用到的一些 xpath 表达式
+# 用到的一些 xpath 表达式
 - 'a/text()' 获取 a 元素的内容
 - '//tag[@attr0][@attr1]'
 
