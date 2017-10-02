@@ -24,7 +24,7 @@ after_script:
   - git init
   - git add --all .
   - git commit -m "Travis CI Auto Builder"
-  - git push --force "https://${GH_TOKEN}@${GH_REF}" master
+  - git push --force "https://${myblog}@${GH_REF}" master
 
 # Building Specific Branches
 branches:
