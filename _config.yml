@@ -4,7 +4,7 @@
 
 # Site
 title: dust8's blog
-subtitle:
+subtitle: 读书百遍, 其义自现
 description:
 author: dust8
 language: zh
@@ -71,4 +71,4 @@ since: 2011
 
 favicon: /assert/avatar.png
 
-highlight_theme: atom-one-dark
+highlight_theme: tomorrow
