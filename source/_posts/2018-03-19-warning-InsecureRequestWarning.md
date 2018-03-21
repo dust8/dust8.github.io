@@ -1,6 +1,6 @@
 ---
 title: 利用warnings忽略InsecureRequestWarning警告
-date: 2018-03-18 05:15:31
+date: 2018-03-19 05:15:31
 tags:
 - 已码学码
 - 标准库
