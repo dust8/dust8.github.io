@@ -11,7 +11,9 @@ tags:
 ## 手写装饰器
 缺点:    
 - 不支持关键字参数
-- 遮盖了被装饰函数的 `__name__` 和 `__doc__` 属性.
+- 遮盖了被装饰函数的 `__name__` 和 `__doc__` 属性    
+
+
 ```python
 import time
 
@@ -45,7 +47,9 @@ if __name__ == '__main__':
     print('*' * 40, 'Calling factorial(6)')
     factorial(6)
 ```
+
 输出    
+
 ```python
 **************************************** Calling snooze(.123
 [0.12387697s] snooze(0.123) -> None
