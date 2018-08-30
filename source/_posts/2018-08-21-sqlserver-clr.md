@@ -1,6 +1,10 @@
 ---
-title: sqlserver与clr
+title: sqlserver与clr程序集
 date: 2018-08-21 05:15:31
+tags:
+    - dba
+    - sqlserver
+    - clr
 ---
 
 最近碰过一个需求，要把 `sqlserver` 里面的几个字段拼接并做 `md5` 处理，在插入为一个 `guid` 字段。由于数据库安装的是中文，用数据库的 `HASHBYTES` 做 `md5` 碰到中文会和正常的不一致，因为它是用 `gb2312` 编码的，正常的应该是用 `utf8` 编码。后来的网上找到可以用 `SQL CLR 用户定义的函数` 来实现。
