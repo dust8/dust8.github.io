@@ -4,7 +4,7 @@
 
 # Site
 title: Dust8's blog
-subtitle: 读书百遍, 其义自现
+subtitle: 读书百遍其义自见
 description:
 author: dust8
 language: zh
@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://www.dust8.com
+url: https://www.dust8.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
