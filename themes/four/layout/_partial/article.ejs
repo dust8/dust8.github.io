@@ -16,12 +16,12 @@
     <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        clientID: "<%= theme.gitalk.clientID %>",
-        clientSecret: "<%= theme.gitalk.clientSecret %>",
+        clientID: "<%= config.gitalk.clientID %>",
+        clientSecret: "<%= config.gitalk.clientSecret %>",
         id: window.location.pathname,
-        repo: "<%= theme.gitalk.repo %>",
-        owner: "<%= theme.gitalk.owner %>",
-        admin: "<%= theme.gitalk.admin %>"
+        repo: "<%= config.gitalk.repo %>",
+        owner: "<%= config.gitalk.owner %>",
+        admin: "<%= config.gitalk.admin %>"
       });
       gitalk.render("gitalk-container");
     </script>
