@@ -1,14 +1,18 @@
 <footer class="footer is-fixed-bottom">
   <div class="container">
     <div class="content has-text-centered">
-      <p>
-        Powered by <a href="https://hexo.io">Hexo</a> Theme -
+      <p>Powered by
+        <a href="https://hexo.io">Hexo</a> Theme -
         <a href="https://github.com/dust8/hexo-theme-four">Four</a>
       </p>
       <p>
-        <% var since = config.since||theme.since; %> &copy; <% if (since){ %>
-        <%= since %> - <% } %> <%= date(Date.now(), 'YYYY') %> <%= config.author
-        %>
+        <% var since = config.since||theme.since; %>
+          &copy;
+          <% if (since){ %>
+            <%= since %> -
+              <% } %>
+                <%= date(Date.now(), 'YYYY') %>
+                  <%= config.author %>
       </p>
     </div>
   </div>
