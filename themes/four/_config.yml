@@ -6,4 +6,11 @@ menu:
 
 favicon: /favicon.ico
 
-
+gitalk:
+  enable: true
+  githubID: dust8
+  repo: dust8.github.io
+  ClientID: 35c2ec469ddc085d9f8d
+  ClientSecret: 19c31b2a4fd5534128bb46bb110a870c5fbb52d7
+  adminUser: dust8
+  distractionFreeMode: true
