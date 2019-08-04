@@ -23,7 +23,9 @@
         admin: "<%= theme.gitalk.admin %>",
         id: window.location.pathname
       });
-      gitalk.render("gitalk-container");
+      if (window.location.pathname != "/") {
+        gitalk.render("gitalk-container");
+      }
     </script>
   </div>
 </section>
