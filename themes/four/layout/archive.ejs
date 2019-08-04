@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="container">
+    <ul class="archive">
+      <% page.posts.each(function (post) { %>
+        <li class="tags">
+          <time class="tag">
+            <%= date(post.date, "YYYY-MM-DD") %>
+          </time>
+
+          <a href="<%- url_for(post.path) %>" class="tag is-dark is-rounded is-medium">
+            <%= post.title %>
+          </a>
+          <%- partial('_partial/post/categorie',{post:post}) %>
+            <%- partial('_partial/post/tag',{post:post}) %>
+
+        </li>
+        <% }) %>
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+<section class="hero is-dark is-medium is-bold">
+  <div class="hero-head">
+    <nav class="navbar is-transparent">
+      <div class="container">
+        <div class="navbar-brand">
+        </div>
+        <div class="navbar-menu is-active">
+          <div class="navbar-end">
+            <% var menu = config.menu||theme.menu; %>
+              <% for (name in menu) { %>
+                <a class="navbar-item" href="<%- url_for(menu[name]) %>">
+                  <%= name %>
+                </a>
+                <% } %>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="hero-body is-hidden-mobile">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        <%= config.title %>
+      </h1>
+      <h2 class="subtitle">
+        <%= config.subtitle %>
+      </h2>
+    </div>
+  </div>
+</section>
