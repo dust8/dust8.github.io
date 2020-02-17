@@ -10,7 +10,7 @@ env:
   GIT_NAME: dust8
   GIT_EMAIL: dust8@users.noreply.github.com
   # 放源文件的分支
-  BRANCHES_SOURCE: blog-source
+  BRANCH_SOURCE: blog-source
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
       - name: 切换到源文件分支
         uses: actions/checkout@v2
         with:
-          ref: ${{ BRANCHES_SOURCE }}
+          ref: ${{ env.BRANCH_SOURCE }}
 
       - name: 配置 Git 环境
         run: |
