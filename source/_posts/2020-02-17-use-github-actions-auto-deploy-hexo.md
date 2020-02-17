@@ -10,7 +10,7 @@ tags:
 好处有几个:
 
 - 源代码不用带着跑, 担心丢失, 一直在分支里面
-- 不用手动生成静态文件,部署, 专注于写作
+- 不用手动生成静态文件, 部署, 专注于写作
 - 不需要用第三方自动构建工具了
 
 ## Github Actions 配置
@@ -77,8 +77,6 @@ jobs:
 ```
 
 `GITHUB_TOKEN`, 在 [https://github.com/settings/tokens](https://github.com/settings/tokens) ,设置名字为 `GITHUB_TOKEN` , 然后勾选 `repo, admin:repo_hook, workflow` 等选项，最后点击 `Generate token` 即可。
-
-##
 
 ## 参考链接
 
