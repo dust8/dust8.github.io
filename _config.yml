@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Dust8's blog
+title: Dust8 的博客
 subtitle: 读书百遍其义自见
-description:
+description: 读书百遍其义自见
 author: dust8
-language: zh
+language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://www.dust8.com
+url: https://dust8.github.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -38,7 +38,7 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: false
+  enable: true
   line_number: true
   auto_detect: true
   tab_replace:
@@ -60,15 +60,40 @@ time_format: HH:mm:ss
 per_page: 0
 pagination_dir: page
 
-theme: four
+theme: next
 
 menu:
-  Home: /
-  Archives: /archives
-  About: /about
+  home: /
+  archives: /archives
+  tags: /tags
+  about: /about
 
 since: 2011
 
 favicon: /assert/avatar.png
 
 highlight_theme: tomorrow
+
+index_generator:
+  per_page: 5
+
+archive_generator:
+  per_page: 20
+  yearly: true
+  monthly: true
+
+tag_generator:
+  per_page: 10
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: " "
+  order_by: -date
+  # icon: icon.png
+  autodiscovery: true
+  template:

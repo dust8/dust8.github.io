@@ -1,0 +1,55 @@
+name: 使用 Actions 自动部署 Hexo 博客
+
+# 当推送的分支是源文件分支时才操作
+on:
+  push:
+    branches:
+      - blog-source
+
+env:
+  GIT_NAME: dust8
+  GIT_EMAIL: dust8@users.noreply.github.com
+  # 放源文件的分支
+  BRANCHES_SOURCE: blog-source
+
+jobs:
+  build:
+    name: 构建与部署博客
+    runs-on: ubuntu-latest
+    steps:
+      - name: 切换到源文件分支
+        uses: actions/checkout@v2
+        with:
+          ref: $BRANCHES_SOURCE
+
+      - name: 配置 Git 环境
+        run: |
+          git config --global user.name "$GIT_NAME"
+          git config --global user.email "$GIT_EMAIL"
+
+      - name: 设置 NodeJS
+        uses: actions/setup-node@v1
+        with:
+        node-version: "10.x"
+
+      - name: 安装 Hexo 及其相关插件
+        run: |
+          export TZ='Asia/Shanghai'
+          npm install hexo-cli -g
+          npm install hexo-generator-feed --save
+
+      - name: 生成静态文件
+        run: hexo g
+
+      - name: 提交静态文件
+        run: |
+          cd ./public
+          git init
+          git add --all .
+          git commit -m "Actions CI Auto Builder"
+
+      - name: 推送静态文件
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
