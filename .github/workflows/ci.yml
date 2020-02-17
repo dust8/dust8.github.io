@@ -20,7 +20,7 @@ jobs:
       - name: 切换到源文件分支
         uses: actions/checkout@v2
         with:
-          ref: $BRANCHES_SOURCE
+          ref: ${{ BRANCHES_SOURCE }}
 
       - name: 配置 Git 环境
         run: |
