@@ -30,7 +30,7 @@ jobs:
       - name: 设置 NodeJS
         uses: actions/setup-node@v1
         with:
-        node-version: "10.x"
+          node-version: "10.x"
 
       - name: 安装 Hexo 及其相关插件
         run: |
