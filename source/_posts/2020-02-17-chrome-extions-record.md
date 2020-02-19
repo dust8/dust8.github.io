@@ -152,7 +152,7 @@ var val = await read(test);
 console.log(val);
 ```
 
-### 其他
+## 其他
 
 ### 页面是 https 的，自己的接口是 http 的会报不安全错误
 
