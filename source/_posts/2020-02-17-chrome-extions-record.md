@@ -152,21 +152,7 @@ var val = await read(test);
 console.log(val);
 ```
 
-## 其他
-
-### 页面是 https 的，自己的接口是 http 的会报不安全错误
-
-可以通过通信传给 `background` 调用接口
-
-### 使用 eval
-
-[Content Security Policy (CSP)](https://developer.chrome.com/extensions/contentSecurityPolicy)
-
-```
-# mainfest.json
-
-"content_security_policy": "script-src 'self' https://example.com; object-src 'self'"
-```
+## chrome.tabs
 
 ### 扩展里面打开新标签页
 
@@ -187,7 +173,62 @@ chrome.tabs.create(
 );
 ```
 
+### 查询和更新关闭标签页
+
+因为这些接口都是异步, 如果需要先判断在执行后面的操作, 最好用承诺来处理, 下面是截取的一部分代码, 不要照搬, 领会原理就好了
+
+```
+function query(urlWd) {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ url: "https://www.baidu.com/s?wd=*" }, function(tabs) {
+      resolve(tabs, urlWd);
+
+      //   else {
+      //     reject(null);
+      //   }
+    });
+  });
+}
+
+function update(tabs, urlWd) {
+  return new Promise((resolve, reject) => {
+    // chrome.tabs.update(tabs[0].id, { url: urlWd, active: true }, function(tab) {
+    //   resolve(tab);
+    // });
+    [...tabs].forEach(tab => {
+      chrome.tabs.remove(tab.id);
+    });
+  });
+}
+
+query(urlWd)
+.then(tabs => {
+  update(tabs);
+})
+.then(e => {
+  gotoBaidu(info, tab);
+});
+```
+
+## 其他
+
+### 页面是 https 的，自己的接口是 http 的会报不安全错误
+
+可以通过通信传给 `background` 调用接口
+
+### 使用 eval
+
+[Content Security Policy (CSP)](https://developer.chrome.com/extensions/contentSecurityPolicy)
+
+```
+# mainfest.json
+
+"content_security_policy": "script-src 'self' https://example.com; object-src 'self'"
+```
+
 ## 参考链接
 
-- [开发文档(360 的, 国内比较方便)](http://open.chrome.360.cn/extension_dev/overview.html)
+- [What are extensions?(google 官方文档)](https://developer.chrome.com/extensions)
+- [开发文档(360 的, 国内比较方便,但是不全)](http://open.chrome.360.cn/extension_dev/overview.html)
 - [【干货】Chrome 插件(扩展)开发全攻略](https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html)
+- [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
