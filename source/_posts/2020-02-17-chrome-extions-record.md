@@ -25,26 +25,23 @@ tags:
 "web_accessible_resources": ["js/inject.js"]
 ```
 
-```
-# content.js
+```js
+// content.js
 
 // 向页面注入JS文件
 // <script src="js/inject.js"></script>
-function injectCustomJs(jsPath)
-{
-    jsPath = jsPath || 'js/inject.js';
-    var temp = document.createElement('script');
-    temp.setAttribute('type', 'text/javascript');
-    // 获得的地址类似：chrome-extension://ihcokhadfjfchaeagdoclpnjdiokfakg/js/inject.js
-    temp.src = chrome.extension.getURL(jsPath);
-    temp.onload = function()
-    {
-        // 放在页面不好看，执行完后移除掉
-        this.parentNode.removeChild(this);
-    };
-    document.head.appendChild(temp);
+function injectCustomJs(jsPath) {
+  jsPath = jsPath || "js/inject.js";
+  var temp = document.createElement("script");
+  temp.setAttribute("type", "text/javascript");
+  // 获得的地址类似：chrome-extension://ihcokhadfjfchaeagdoclpnjdiokfakg/js/inject.js
+  temp.src = chrome.extension.getURL(jsPath);
+  temp.onload = function() {
+    // 放在页面不好看，执行完后移除掉
+    this.parentNode.removeChild(this);
+  };
+  document.head.appendChild(temp);
 }
-
 
 injectCustomJs();
 
@@ -61,22 +58,21 @@ $.ajax({
     console.log("success");
   }
 });
-
 ```
 
-```
-# inject.js
+```js
+// inject.js
 
 // 回调函数
-function cb(){
-    console.log('jsonp 回调')
+function cb() {
+  console.log("jsonp 回调");
 }
 ```
 
 ### content script css 文件引入图片资源
 
-```
-# content.css
+```css
+/* content.css */
 background-image: url("chrome-extension://__MSG_@@extension_id__/images/rotate.png");
 ```
 
@@ -102,6 +98,16 @@ background-image: url("chrome-extension://__MSG_@@extension_id__/images/rotate.p
  ]
 ```
 
+### 屏蔽原始网页的内容
+
+屏蔽原始网页的内容很常见, 如果用 `js` 来屏蔽会先出现,然后在消失. 给人感觉就不好了. 可以在 `css` 里面屏蔽, 这样就不会出现了. 当然也要设置 `"run_at": "document_start"` .
+
+```css
+#userinfo {
+  display: none !important;
+}
+```
+
 ## 存储相关
 
 ### chrome.storage 获取不到数据
@@ -109,44 +115,44 @@ background-image: url("chrome-extension://__MSG_@@extension_id__/images/rotate.p
 原因是这些接口是异步的, 它有时还没取到数据就执行后面的脚本, 导致有时获取不到数据.  
 方法一:回调函数
 
-```
+```js
 function read(key, callback) {
-    if(key != null) {
-        chrome.storage.local.get(key, function (obj) {
-            callback(obj);
-        });
-    }
+  if (key != null) {
+    chrome.storage.local.get(key, function(obj) {
+      callback(obj);
+    });
+  }
 }
 
 // Usage
 read("test", function(val) {
   // val...
-})
+});
 ```
 
 方法二:承诺
 
-```
+```js
 function read(key) {
-    return new Promise((resolve, reject) => {
-        if (key != null) {
-            chrome.storage.local.get(key, function (obj) {
-                resolve(obj);
-            });
-        } else {
-            reject(null);
-        }
-    });
+  return new Promise((resolve, reject) => {
+    if (key != null) {
+      chrome.storage.local.get(key, function(obj) {
+        resolve(obj);
+      });
+    } else {
+      reject(null);
+    }
+  });
 }
 
 // 1. Classic usage
-read('test')
-    .then(function (val) {
-        // val...
-    })
-    .catch(function () {
-        // looks like key is null
-    });
+read("test")
+  .then(function(val) {
+    // val...
+  })
+  .catch(function() {
+    // looks like key is null
+  });
 
 // 2. Use async/await
 var val = await read(test);
@@ -159,7 +165,7 @@ console.log(val);
 
 除了 `windows.open` 还可以用扩展的接口
 
-```
+```js
 chrome.tabs.create(
   {
     url: "http://xxx.com",
@@ -178,7 +184,7 @@ chrome.tabs.create(
 
 因为这些接口都是异步, 如果需要先判断在执行后面的操作, 最好用承诺来处理, 下面是截取的一部分代码, 不要照搬, 领会原理就好了
 
-```
+```js
 function query(urlWd) {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({ url: "https://www.baidu.com/s?wd=*" }, function(tabs) {
@@ -203,12 +209,40 @@ function update(tabs, urlWd) {
 }
 
 query(urlWd)
-.then(tabs => {
-  update(tabs);
-})
-.then(e => {
-  gotoBaidu(info, tab);
-});
+  .then(tabs => {
+    update(tabs);
+  })
+  .then(e => {
+    gotoBaidu(info, tab);
+  });
+```
+
+## chrome.cookies
+
+### 获取 cookie
+
+要获取 `cookie` 比如用 `chrome.cookies.getAll({})` 获取所有的 `cookies`, 会返回空数组, 是因为权限没有设置好. 除了要设置 `cookies` 还要在权限里面设置域名, 要在 `chrome://extensions/` 页面点击扩展的刷新按钮, 仔细检查看扩展有没有错误按钮,有的话要进去看是什么错误, 这也是一种很好检查错误的方式.
+
+```
+"permissions": [
+"cookies",
+"*://*.baidu.com/*",
+]
+```
+
+### 设置 cookie
+
+设置 `cookie` 的时候我一直不太明白 `url` 和 `domain` 的区别, 文档也说的不是让人一看就清楚, 直到看来例子里面的代码才明白了 `url` 要怎么设置. 还有就是要清除 `url` 里面多余的 `.` 符号.
+
+```js
+function getUrlByCookie(cookie) {
+  let domain = cookie.domain;
+  if (domain.charAt(0) == ".") {
+    domain = domain.substring(1);
+  }
+
+  return "http" + (cookie.secure ? "s" : "") + "://" + domain + cookie.path;
+}
 ```
 
 ## 其他
@@ -233,3 +267,4 @@ query(urlWd)
 - [开发文档(360 的, 国内比较方便,但是不全)](http://open.chrome.360.cn/extension_dev/overview.html)
 - [【干货】Chrome 插件(扩展)开发全攻略](https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html)
 - [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+- [Chrome 扩展及应用开发（首发版）](https://www.ituring.com.cn/book/1421)
