@@ -17,11 +17,11 @@ tags:
 
 ### 二级人口：
 
-![](./assert/2017-03-22-1.png)
+![](/blog/assert/2017-03-22-1.png)
 点击进去查看源代码，发现没有内容，可以知道它是 ** 动态加载 ** 的。
 通过 _ Network _ 里面的 _ XHR _，并没有发现请求，查看 ** JS **
 发现一个可疑请求  
-![](./assert/2017-03-22-2.png)
+![](/blog/assert/2017-03-22-2.png)
 就是它了 ** http://temp.163.com/special/00804KVA/cm_guonei.js?callback=data_callback **
 通过它就可以得到 ** guonei ** 的最近新闻内容）。
 
@@ -30,7 +30,7 @@ tags:
 ### 评论入口
 
 同理可以发现
-![](./assert/2017-03-22-3.png)
+![](/blog/assert/2017-03-22-3.png)
 
 - 最热评论 hotList
 - 最新评论 newList
@@ -98,8 +98,8 @@ class NewsSpider(scrapy.Spider):
 ## 抓取结果
 
 只抓取了一次国内新闻。共 _ 70 _ 条新闻，_ 2012 _ 条评论。
-![](./assert/2017-03-22-4.png)
-![](./assert/2017-03-22-5.png)
+![](/blog/assert/2017-03-22-4.png)
+![](/blog/assert/2017-03-22-5.png)
 
 ## 需要改进的
 

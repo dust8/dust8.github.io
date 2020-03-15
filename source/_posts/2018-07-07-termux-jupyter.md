@@ -38,4 +38,4 @@ pip install jupyter
 #### 使用魔法方法
 
 在 `jupyter` 里面运行 `linux` 命令.  
-![jupyter magic](./assert/2018-07-07.png)
+![jupyter magic](/blog/assert/2018-07-07.png)

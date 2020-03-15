@@ -193,4 +193,4 @@ finally:
 ## 爬取成果
 
 爬了 20 分钟，下了 29 个视频，共 2.1G。
-![stuq_spider](./assert/2017-03-08-stuq.png)
+![stuq_spider](/blog/assert/2017-03-08-stuq.png)

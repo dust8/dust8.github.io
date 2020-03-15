@@ -6,7 +6,7 @@ tags:
   - 标准库
 ---
 
-![warnings](./assert/2018-03-19.png)
+![warnings](/blog/assert/2018-03-19.png)
 
 今天在 `requests` 的源代码里面看到下面的写法
 

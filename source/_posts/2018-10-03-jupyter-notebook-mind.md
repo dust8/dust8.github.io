@@ -23,7 +23,7 @@ DMind
     是一个思维导图插件
 ```
 
-![text 格式](./assert/2018-10-03-1.png)
+![text 格式](/blog/assert/2018-10-03-1.png)
 
 ### markdown 格式, 逻辑结构图
 
@@ -42,7 +42,7 @@ DMind
 #### %%dmind datatype template theme 换行后输入内容
 ```
 
-![markdown 格式, 逻辑结构图](./assert/2018-10-03-2.png)
+![markdown 格式, 逻辑结构图](/blog/assert/2018-10-03-2.png)
 
 ### json 格式 , 目录组织图, 文艺绿
 
@@ -58,7 +58,7 @@ DMind
 ...
 ```
 
-![json 格式 , 目录组织图, 文艺绿](./assert/2018-10-03-3.png)
+![json 格式 , 目录组织图, 文艺绿](/blog/assert/2018-10-03-3.png)
 
 ## 碰到的问题
 

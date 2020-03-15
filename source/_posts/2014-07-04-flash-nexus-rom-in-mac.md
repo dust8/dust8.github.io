@@ -10,7 +10,7 @@ tags:
 
 # 1.下载安装 fastboot 和 adb
 
-[task－adb－fastboot.zip](./assert/2014-07-04-task-adb-fastboot.zip)或者去<http://bbs.gfan.com/android-3945571-1-1.html>下载。
+[task－adb－fastboot.zip](/blog/assert/2014-07-04-task-adb-fastboot.zip)或者去<http://bbs.gfan.com/android-3945571-1-1.html>下载。
 
 把它解压出来有 4 个文件：adb－mac，adb－ubuntu，fastboot－mac，fastboot－ubuntu。
 

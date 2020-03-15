@@ -5,7 +5,7 @@ tags:
   - 已码学码
 ---
 
-![socks](./assert/2018-03-25.png)
+![socks](/blog/assert/2018-03-25.png)
 
 ## socks
 
