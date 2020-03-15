@@ -1,6 +1,6 @@
 ---
 title: a-tour-of-go-exercise-slices.go实现
-date: '2014/12/13 20:00:00'
+date: "2014/12/13 20:00:00"
 tags:
   - go
 ---
@@ -27,7 +27,7 @@ tags:
 
 # 解题
 
-本题的本意其实就是要生成一个2维的整数数组。<br>
+本题的本意其实就是要生成一个 2 维的整数数组。<br>
 那些函数只是决定生成的图像的样子，并不是考察的目的所在。
 
 代码实现如下：
@@ -61,10 +61,10 @@ func main() {
 # 有趣的函数生成的图像
 
 1. `(x+y)/2`<br>
-  ![(x+y)/2](/assert/2014-12-13-exercise-slices-1.png)
+   ![(x+y)/2](./assert/2014-12-13-exercise-slices-1.png)
 
 2. `x*y`<br>
-  ![x*y](/assert/2014-12-13-exercise-slices-2.png)
+   ![x*y](./assert/2014-12-13-exercise-slices-2.png)
 
 3. `x^y`<br>
-  ![x^y](/assert/2014-12-13-exercise-slices-3.png)
+   ![x^y](./assert/2014-12-13-exercise-slices-3.png)

@@ -3,16 +3,19 @@ title: python装饰器
 date: 2018-03-21 05:15:31
 tags:
 ---
-![decorator](/assert/2018-03-21.png)    
+
+![decorator](./assert/2018-03-21.png)
 
 ## 基础知识
+
 装饰器是可调用的对象,其参数是另一个函数(被装饰的函数).
 
 ## 手写装饰器
-缺点:    
-- 不支持关键字参数
-- 遮盖了被装饰函数的 `__name__` 和 `__doc__` 属性    
 
+缺点:
+
+- 不支持关键字参数
+- 遮盖了被装饰函数的 `__name__` 和 `__doc__` 属性
 
 ```python
 import time
@@ -48,7 +51,7 @@ if __name__ == '__main__':
     factorial(6)
 ```
 
-输出    
+输出
 
 ```python
 **************************************** Calling snooze(.123
@@ -63,7 +66,9 @@ if __name__ == '__main__':
 ```
 
 ## 标准库里的装饰器
+
 `functools.wraps` 是标准库里的装饰器,它的作用是协助构建行为良好的装饰器,解决了手写装饰器的缺点.
+
 ```python
 from functools import wraps
 
@@ -76,7 +81,9 @@ from functools import wraps
 ```
 
 ## 可以调用类里面方法的装饰器
+
 只要在参数里面加上 `self`, 就可以使用类里面的方法了.
+
 ```python
 from functools import wraps
 
