@@ -38,7 +38,7 @@ plt.imshow(np.squeeze(x_train[1],-1),cmap='gray')
 
     <matplotlib.image.AxesImage at 0x1f4aa567bc8>
 
-![png](/assert/2020-03-03-1.png)
+![png](./assert/2020-03-03-1.png)
 
 ## ShiXin 模型
 
@@ -154,7 +154,7 @@ plot_model(sx_predict_model.model, to_file='ctc.png', show_shapes=True)
 Image('ctc.png')
 ```
 
-![ctc.png](/assert/2020-03-03-2.png)
+![ctc.png](./assert/2020-03-03-2.png)
 
 ```python
 sx_predict_model.model.summary()
