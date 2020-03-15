@@ -1,5 +1,5 @@
 ---
-title: 使用 TensorFlow 做定长文本识别
+title: 使用 tensorflowjs 的 handpose 模型做体感游戏
 date: 2020-03-17 05:15:31
 tags:
   - tensorflow
