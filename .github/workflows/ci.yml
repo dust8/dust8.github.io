@@ -37,6 +37,7 @@ jobs:
           export TZ='Asia/Shanghai'
           npm install hexo-cli -g
           npm install hexo-generator-feed --save
+          npm install hexo-lazyload --save
 
       - name: 生成静态文件
         run: hexo g
