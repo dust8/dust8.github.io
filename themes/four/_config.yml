@@ -5,12 +5,11 @@ menu:
 #since: 2016
 
 favicon: /favicon.ico
-
-gitalk:
-  enable: true
-  owner: dust8
-  repo: dust8.github.io
-  clientID: 35c2ec469ddc085d9f8d
-  clientSecret: 19c31b2a4fd5534128bb46bb110a870c5fbb52d7
-  admin: dust8
-  distractionFreeMode: true
+# gitalk:
+#   enable: true
+#   owner: dust8
+#   repo: dust8.github.io
+#   clientID: 35c2ec469ddc085d9f8d
+#   clientSecret: 19c31b2a4fd5534128bb46bb110a870c5fbb52d7
+#   admin: dust8
+#   distractionFreeMode: true
