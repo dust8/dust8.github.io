@@ -60,7 +60,7 @@ time_format: HH:mm:ss
 per_page: 0
 pagination_dir: page
 
-theme: next
+theme: four
 
 menu:
   home: /
