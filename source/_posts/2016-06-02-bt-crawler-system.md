@@ -73,7 +73,7 @@ tags:
 
 # 爬虫架构
 
-![bt-crawler-system](/blog/assert/2016-06-02-bt-crawler-system.PNG)
+![bt-crawler-system](/assert/2016-06-02-bt-crawler-system.PNG)
 
 1. `infohash` 抓取用 `maga` 改的
 2. `metadata` 抓取用 迅雷的地址

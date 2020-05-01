@@ -8,7 +8,7 @@ tags:
 # 怎么调试 xpath 的
 
 不喜欢用正则，感觉用有时用 xpath 简单很多。  
-![](/blog/assert/2017-10-02.png)
+![](/assert/2017-10-02.png)
 
 # 用到的一些 xpath 表达式
 

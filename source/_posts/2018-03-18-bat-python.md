@@ -34,7 +34,7 @@ Rem 运行命令
 pause
 ```
 
-![main.bat](/blog/assert/2018-03-18.png)
+![main.bat](/assert/2018-03-18.png)
 
 备注:
 

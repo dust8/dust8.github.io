@@ -11,11 +11,11 @@ tags:
 
 ## 新建项目
 
-![新建项目](/blog/assert/2018-08-21-1.png)
+![新建项目](/assert/2018-08-21-1.png)
 
 ## 添加新建项
 
-![添加新建项](/blog/assert/2018-08-21-2.png)
+![添加新建项](/assert/2018-08-21-2.png)
 
 ## 实现函数
 
@@ -66,7 +66,7 @@ public partial class UserDefinedFunctions
 
 ## 注册 dll
 
-![注册dll](/blog/assert/2018-08-21-3.png)
+![注册dll](/assert/2018-08-21-3.png)
 
 ## 使用
 
@@ -93,7 +93,7 @@ RECONFIGURE;
 select dbo.MD5Encrypt('我'),dbo.Guid(dbo.MD5Encrypt('我'))
 ```
 
-![注](/blog/assert/2018-08-21-4.png)
+![注](/assert/2018-08-21-4.png)
 
 备注：
 

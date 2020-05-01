@@ -4,7 +4,7 @@ date: 2018-03-21 05:15:31
 tags:
 ---
 
-![decorator](/blog/assert/2018-03-21.png)
+![decorator](/assert/2018-03-21.png)
 
 ## 基础知识
 

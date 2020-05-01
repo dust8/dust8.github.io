@@ -18,7 +18,7 @@ tags:
 源码: [HandPlaneGame](https://github.com/dust8/HandPlaneGame)  
 查看 demo: [HandPlaneGame](https://dust8.github.io/HandPlaneGame/)
 
-![截图](/blog/assert/2020-03-17.gif)
+![截图](/assert/2020-03-17.gif)
 
 ## 参考链接
 

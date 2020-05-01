@@ -61,10 +61,10 @@ func main() {
 # 有趣的函数生成的图像
 
 1. `(x+y)/2`<br>
-   ![(x+y)/2](/blog/assert/2014-12-13-exercise-slices-1.png)
+   ![(x+y)/2](/assert/2014-12-13-exercise-slices-1.png)
 
 2. `x*y`<br>
-   ![x*y](/blog/assert/2014-12-13-exercise-slices-2.png)
+   ![x*y](/assert/2014-12-13-exercise-slices-2.png)
 
 3. `x^y`<br>
-   ![x^y](/blog/assert/2014-12-13-exercise-slices-3.png)
+   ![x^y](/assert/2014-12-13-exercise-slices-3.png)

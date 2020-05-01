@@ -26,7 +26,7 @@ tags:
 在 **Elements** 里面选择要提取的元素，右键 Copy > Copy Xpath。这种方式虽然方便，还是有很多不足。
 例如层级太深，只能选一个元素，这样兼容性不太好，网站稍微改一下就不行了，需要自己改动下，通过类名或者 id 等等来提高。
 
-![export-xpath](/blog/assert/2017-03-07-export-xpath.gif)
+![export-xpath](/assert/2017-03-07-export-xpath.gif)
 
 ## 测试 xpath
 
@@ -35,4 +35,4 @@ tags:
 返回一个与给定 XPath 表达式匹配的 DOM 元素数组。
 记得这里只能提取元素，不能提取元素的属性。
 
-![test-xpath](/blog/assert/2017-03-07-test-xpath.png)
+![test-xpath](/assert/2017-03-07-test-xpath.png)

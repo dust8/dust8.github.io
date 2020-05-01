@@ -68,7 +68,7 @@ pytesseract.pytesseract.tesseract_cmd = r'<full_path_to_your_tesseract_executabl
 - [tesseract](https://github.com/tesseract-ocr/tesseract)
 - [pytesseract](https://pypi.org/project/pytesseract/)
 - [pyzbar](https://pypi.org/project/pyzbar/)
-- [A comprehensive guide to OCR with Tesseract, OpenCV and Python](https://nanonets.com/blog/ocr-with-tesseract/)
+- [A comprehensive guide to OCR with Tesseract, OpenCV and Python](https://nanonets.com/ocr-with-tesseract/)
 - [Publishing package distribution releases using GitHub Actions CI/CD workflows](https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/)
 - [gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish)
 - [Git-Basics-Tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging)

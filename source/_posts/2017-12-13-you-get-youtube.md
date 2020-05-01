@@ -29,7 +29,7 @@ for (var i = 0, len = hrefs.length; i < len; i++) {
 }
 ```
 
-![](/blog/assert/2017-12-13.png)
+![](/assert/2017-12-13.png)
 
 把链接复制到 youtube.txt 文件里面去。
 
