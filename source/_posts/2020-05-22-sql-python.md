@@ -23,7 +23,7 @@ def insert(conn,table_name, data, sep='?'):
     # 把键值对数组变成对应的键数组和值数组
     keys, values = zip(*zipped)
 
-    sql = f"insert into {table_name}({', '.join(keys)}) values ({', '.join(['{sep}' for _ in range(len(values))])})"
+    sql = f"insert into {table_name}({', '.join(keys)}) values ({', '.join([sep for _ in range(len(values))])})"
     cur.execute(sql, values)
     conn.commit()
     cur.close()
