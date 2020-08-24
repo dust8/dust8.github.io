@@ -7,24 +7,29 @@ tags:
 ---
 
 最近又写了个爬虫, 爬美团的商家.总结一下新写法.
-因为接口是加密的,懒得去找参数了,直接用浏览器渲染, 试了下 `request-html` 效果不好, 也不想用 `pyppeteer` 来写, 选择了无脑的渲染服务 `splash`.
+因为接口是加密的,懒得去找参数了,直接用浏览器渲染, 试了下 `request-html` 效果不好, 也不想用 `pyppeteer` 来写, 选择了无脑的渲染服务 `splash`. 
 
 ## javascript 渲染服务
-
-[splash 安装](https://splash.readthedocs.io/en/stable/install.html) 直接用 `docker` 来安装, 方便快捷
-
+[splash安装](https://splash.readthedocs.io/en/stable/install.html)  直接用 `docker` 来安装, 方便快捷
 ```
 docker run -it -p 8050:8050 --rm scrapinghub/splash
 ```
 
-## 代理服务
+因为渲染页面会执行服务端的识别代码, 所以需要不断的重开容器来避免请求数太多 
+```
+sudo docker stop $(sudo docker ps -f ancestor=scrapinghub/splash -q) && sudo docker run -it -d -p 8050:8050 --rm scrapinghub/splash
+```
+可以把它放到定时任务里面,例如半个小时重开一次
+```
+# crontab -e
+30 * * * * sudo docker stop $(sudo docker ps -f ancestor=scrapinghub/splash -q) && sudo docker run -it -d -p 8050:8050 --rm scrapinghub/splash
+```
 
-由于有反爬, 所以需要不停的换 ip 地址, 不然会出现验证码等反爬响应.买的话性价比也不高, 选择了开源的自建代理池 [https://github.com/kagxin/proxy-pool](https://github.com/kagxin/proxy-pool) 也是支持用 `docker` 部署
+## 代理服务
+由于有反爬, 所以需要不停的换ip地址, 不然会出现验证码等反爬响应.买的话性价比也不高, 选择了开源的自建代理池 [https://github.com/kagxin/proxy-pool](https://github.com/kagxin/proxy-pool) 也是支持用 `docker` 部署
 
 ## 重试库
-
 免费代理质量一般都不咋样, 所以需要不停的重试来保障请求的完整.下面是很粗暴的解析不到数据就主动引发错误来重试.
-
 ```
 from retrying import retry
 
@@ -65,8 +70,9 @@ def get_shop_urls(url, headers=None):
     return links
 ```
 
-## 参考链接
 
+## 参考链接
 - [Splash - A javascript rendering service](https://github.com/scrapinghub/splash)
-- [Python3：给 splash 的 render.html 接口添加请求头](https://blog.csdn.net/u012552769/article/details/88028468)
+- [Python3：给splash的render.html接口添加请求头](https://blog.csdn.net/u012552769/article/details/88028468)
 - [rholder/retrying](https://github.com/rholder/retrying)
+- [Crontab - 定时任务必备招式](http://swiftcafe.io/2017/02/03/crontab/)
