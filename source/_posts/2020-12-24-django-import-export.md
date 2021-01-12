@@ -57,6 +57,48 @@ class BookAdmin(ImportExportModelAdmin):
 admin.site.register(Book, BookAdmin)
 ```
 
+### 常见使用
+```python
+# 定义导出字段 fields
+class BookResource(resources.ModelResource):
+
+    class Meta:
+        model = Book
+        fields = ('id', 'name', 'price', 'author__name', )
+```
+```python
+# 排除导出字段 exclude
+class BookResource(resources.ModelResource):
+
+    class Meta:
+        model = Book
+        exclude = ('imported', )
+```
+```python
+# 排序导出字段 export_order
+class BookResource(resources.ModelResource):
+
+    class Meta:
+        model = Book
+        fields = ('id', 'name', 'author', 'price',)
+        export_order = ('id', 'price', 'author', 'name')
+```
+
+### 导出自定义字段
+命名方式 `dehydrate_<fieldname>`
+```python
+from import_export.fields import Field
+
+class BookResource(resources.ModelResource):
+    full_title = Field()
+
+    class Meta:
+        model = Book
+
+    def dehydrate_full_title(self, book):
+        return '%s by %s' % (book.name, book.author.name)
+```
+
 ## 问题
 ### 1. 如果有自定义的  `actions`, 导入导出会不显示
 查看 `django-import-export` 源码
