@@ -9,8 +9,9 @@ tags:
 
 ```python
 def save_model(self, request, obj, form, change):
-    # form.initial 表单里面的初始值保存着原来的数据, clean_data 里面就是更改后的数据
-    user_info = form.initial["user_info"]
+    # form.initial 表单里面的初始值保存着原来的数据, cleaned_data 里面就是更改后的数据
+    # 新增获取不到,要给个默认值
+    user_info = form.initial.get("user_info",None)
     try:
         user_instance = obj.user_classmets
         # 这是保存改动
