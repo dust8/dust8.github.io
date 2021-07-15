@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/assert/avatar.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dust8 的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="有台服务器只给内部人员用, 所以就添加了白名单. 但是 ip 总是变, 手动改太麻烦了,就写了个定时查询出 ip, 发现 ip 变了就自动修改阿里云的安全组设置的脚本. 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 python 来自动修改阿里云安全组">
+<meta property="og:url" content="https://dust8.github.io/blog/2020/05/21/aliyun-security-group-with-python/index.html">
+<meta property="og:site_name" content="Dust8 的博客">
+<meta property="og:description" content="有台服务器只给内部人员用, 所以就添加了白名单. 但是 ip 总是变, 手动改太麻烦了,就写了个定时查询出 ip, 发现 ip 变了就自动修改阿里云的安全组设置的脚本. 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-15T13:15:09.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 python 来自动修改阿里云安全组">
+<meta name="twitter:description" content="有台服务器只给内部人员用, 所以就添加了白名单. 但是 ip 总是变, 手动改太麻烦了,就写了个定时查询出 ip, 发现 ip 变了就自动修改阿里云的安全组设置的脚本. 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dust8.github.io/blog/2020/05/21/aliyun-security-group-with-python/">
+
+
+
+
+
+  <title>使用 python 来自动修改阿里云安全组 | Dust8 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dust8 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">读书百遍其义自见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dust8.github.io/blog/2020/05/21/aliyun-security-group-with-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dust8">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dust8 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用 python 来自动修改阿里云安全组</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-21T05:15:31+00:00">
+                2020-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有台服务器只给内部人员用, 所以就添加了白名单. 但是 ip 总是变, 手动改太麻烦了,<br>就写了个定时查询出 ip, 发现 ip 变了就自动修改阿里云的安全组设置的脚本.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># https://helpcdn.aliyun.com/document_detail/25699.html</span></span><br><span class="line"><span class="comment"># https://helpcdn.aliyun.com/document_detail/25554.html</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="keyword">import</span> ClientException, ServerException</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.client <span class="keyword">import</span> AcsClient</span><br><span class="line"><span class="keyword">from</span> aliyunsdkecs.request.v20140526.AuthorizeSecurityGroupRequest <span class="keyword">import</span> (</span><br><span class="line">    AuthorizeSecurityGroupRequest,</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> aliyunsdkecs.request.v20140526.RevokeSecurityGroupRequest <span class="keyword">import</span> (</span><br><span class="line">    RevokeSecurityGroupRequest,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">FORMAT = <span class="string">"%(asctime)-15s %(levelname)s %(message)s"</span></span><br><span class="line">logging.basicConfig(level=logging.INFO, format=FORMAT)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改为自己的 ram 账号</span></span><br><span class="line">client = AcsClient(</span><br><span class="line">    <span class="string">"x"</span>, <span class="string">"x"</span>, <span class="string">"x"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_ip</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">"http://www.httpbin.org/ip"</span></span><br><span class="line">    res = requests.get(url)</span><br><span class="line"></span><br><span class="line">    data = res.json()</span><br><span class="line">    <span class="keyword">return</span> data[<span class="string">"origin"</span>] + <span class="string">"/24"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">del_group</span><span class="params">(security_group_id, ip_protocol, port_range, source_cidr_ip)</span>:</span></span><br><span class="line">    <span class="string">"""删除规则"""</span></span><br><span class="line">    request = RevokeSecurityGroupRequest()</span><br><span class="line">    request.set_accept_format(<span class="string">"json"</span>)</span><br><span class="line">    request.set_SecurityGroupId(security_group_id)</span><br><span class="line">    request.set_PortRange(port_range)</span><br><span class="line">    request.set_IpProtocol(ip_protocol)</span><br><span class="line">    request.set_SourceCidrIp(source_cidr_ip)</span><br><span class="line"></span><br><span class="line">    response = client.do_action_with_exception(request)</span><br><span class="line">    <span class="comment"># print(str(response, encoding='utf-8'))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_group</span><span class="params">(security_group_id, ip_protocol, port_range, dsecription, source_cidr_ip)</span>:</span></span><br><span class="line">    <span class="string">"""添加规则"""</span></span><br><span class="line">    request = AuthorizeSecurityGroupRequest()</span><br><span class="line">    request.set_accept_format(<span class="string">"json"</span>)</span><br><span class="line"></span><br><span class="line">    request.set_SecurityGroupId(security_group_id)</span><br><span class="line">    request.set_IpProtocol(ip_protocol)</span><br><span class="line">    request.set_PortRange(port_range)</span><br><span class="line">    request.set_Description(dsecription)</span><br><span class="line">    request.set_SourceCidrIp(source_cidr_ip)</span><br><span class="line"></span><br><span class="line">    response = client.do_action_with_exception(request)</span><br><span class="line">    <span class="comment"># print(str(response, encoding='utf-8'))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    security_group_id = <span class="string">"修改为自己的安全组id"</span></span><br><span class="line">    ip_protocol = <span class="string">"tcp"</span></span><br><span class="line">    port_range = <span class="string">"9000/9999"</span></span><br><span class="line">    dsecription = <span class="string">"公司ip"</span></span><br><span class="line"></span><br><span class="line">    old_ip = <span class="string">"192.168.0.1/24"</span></span><br><span class="line">    new_ip = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            new_ip = get_ip()</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            time.sleep(<span class="number">5</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> old_ip != new_ip:</span><br><span class="line">            logging.info(<span class="string">f"<span class="subst">&#123;old_ip&#125;</span> =&gt; <span class="subst">&#123;new_ip&#125;</span>"</span>)</span><br><span class="line">            del_group(</span><br><span class="line">                security_group_id=security_group_id,</span><br><span class="line">                ip_protocol=ip_protocol,</span><br><span class="line">                port_range=port_range,</span><br><span class="line">                source_cidr_ip=old_ip,</span><br><span class="line">            )</span><br><span class="line">            add_group(</span><br><span class="line">                security_group_id=security_group_id,</span><br><span class="line">                ip_protocol=ip_protocol,</span><br><span class="line">                port_range=port_range,</span><br><span class="line">                dsecription=dsecription,</span><br><span class="line">                source_cidr_ip=new_ip,</span><br><span class="line">            )</span><br><span class="line">            old_ip = new_ip</span><br><span class="line"></span><br><span class="line">        time.sleep(<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/12/django-custom-upload-to/" rel="next" title="Django 使用upload_to 自定义上传路径">
+                <i class="fa fa-chevron-left"></i> Django 使用upload_to 自定义上传路径
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/23/sql-python/" rel="prev" title="用 python 方便的插入原生 sql 数据">
+                用 python 方便的插入原生 sql 数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">dust8</p>
+              <p class="site-description motion-element" itemprop="description">读书百遍其义自见</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dust8" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.the5fire.com/" title="the5fire" target="_blank">the5fire</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dust8</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

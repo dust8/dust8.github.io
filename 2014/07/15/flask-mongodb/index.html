@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/assert/avatar.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="flask,mongodb,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dust8 的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="最近在用flask＋mongodb做一个论坛，做了很久。有些体会和大家分享下。  学东西一定要仔细看文档，多看几遍；很多东西其实在文档里已经说明了的，不需要在去搜，而且不一定能搜到。 有些事去做的时候一定要专注。 有些时候人很容易钻牛角尖，可以试试放段时间再去解决。  Flask-MongoEngine 文档在http://flask-mongoengine.readthedocs.org/en/">
+<meta name="keywords" content="flask,mongodb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask和mongodb建站总结">
+<meta property="og:url" content="https://dust8.github.io/blog/2014/07/15/flask-mongodb/index.html">
+<meta property="og:site_name" content="Dust8 的博客">
+<meta property="og:description" content="最近在用flask＋mongodb做一个论坛，做了很久。有些体会和大家分享下。  学东西一定要仔细看文档，多看几遍；很多东西其实在文档里已经说明了的，不需要在去搜，而且不一定能搜到。 有些事去做的时候一定要专注。 有些时候人很容易钻牛角尖，可以试试放段时间再去解决。  Flask-MongoEngine 文档在http://flask-mongoengine.readthedocs.org/en/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img4.cache.netease.com/help/2011/2/1/20110201095104ff8bc.png">
+<meta property="og:updated_time" content="2021-07-15T13:15:09.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flask和mongodb建站总结">
+<meta name="twitter:description" content="最近在用flask＋mongodb做一个论坛，做了很久。有些体会和大家分享下。  学东西一定要仔细看文档，多看几遍；很多东西其实在文档里已经说明了的，不需要在去搜，而且不一定能搜到。 有些事去做的时候一定要专注。 有些时候人很容易钻牛角尖，可以试试放段时间再去解决。  Flask-MongoEngine 文档在http://flask-mongoengine.readthedocs.org/en/">
+<meta name="twitter:image" content="http://img4.cache.netease.com/help/2011/2/1/20110201095104ff8bc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dust8.github.io/blog/2014/07/15/flask-mongodb/">
+
+
+
+
+
+  <title>flask和mongodb建站总结 | Dust8 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dust8 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">读书百遍其义自见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dust8.github.io/blog/2014/07/15/flask-mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dust8">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dust8 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">flask和mongodb建站总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-07-15T20:00:00+00:00">
+                2014-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在用flask＋mongodb做一个论坛，做了很久。有些体会和大家分享下。</p>
+<ol>
+<li>学东西一定要仔细看文档，多看几遍；很多东西其实在文档里已经说明了的，<br><br>不需要在去搜，而且不一定能搜到。</li>
+<li>有些事去做的时候一定要专注。</li>
+<li>有些时候人很容易钻牛角尖，可以试试放段时间再去解决。</li>
+</ol>
+<h1 id="Flask-MongoEngine"><a href="#Flask-MongoEngine" class="headerlink" title="Flask-MongoEngine"></a>Flask-MongoEngine</h1><hr>
+<p>文档在<a href="http://flask-mongoengine.readthedocs.org/en/latest/" target="_blank" rel="noopener">http://flask-mongoengine.readthedocs.org/en/latest/</a>。</p>
+<p>使用分页的时候报 xrange 错误，是因为在python3里面已经没有这个内置函数了，<br><br>可以把python里面的site－packages/flask_mongoengine/pagination.py里面的109行<br><br>的xrange改为range就可以了。</p>
+<h1 id="Flask-Login"><a href="#Flask-Login" class="headerlink" title="Flask-Login"></a>Flask-Login</h1><hr>
+<p>文档在<a href="http://flask-login.readthedocs.org/en/latest/" target="_blank" rel="noopener">http://flask-login.readthedocs.org/en/latest/</a>，<br><br>这里有个中文翻译<a href="https://github.com/yinian1992/flask-login-docs-cn/blob/master/index.rst" target="_blank" rel="noopener">https://github.com/yinian1992/flask-login-docs-cn/blob/master/index.rst</a>。</p>
+<p>在登录限制里和mongodb用时可以这样用，放在了models.py里</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@login_manager.user_loader</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_user</span><span class="params">(userid)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> userid <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> User.objects(id=userid).first()</span><br></pre></td></tr></table></figure>
+<p>User是用户类，继承了flask.ext.login.UserMixin和flask.ext.mongoengine.MongoEngine的Document。<br><br>在视图里</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from flask<span class="selector-class">.ext</span><span class="selector-class">.login</span> import login_user</span><br><span class="line"><span class="function"><span class="title">login_user</span><span class="params">(user)</span></span></span><br></pre></td></tr></table></figure>
+<p>函数里的user就是一个User类的实例。</p>
+<h1 id="jinja"><a href="#jinja" class="headerlink" title="jinja"></a>jinja</h1><hr>
+<p>flask默认的模板引擎是jinja。<br><br>我有个回复的list列表，要在模板里列出他的楼数。<br><br>python里可以这样：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">l = [<span class="string">'a'</span>, <span class="string">'s'</span>]</span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span>, <span class="selector-tag">b</span> <span class="keyword">in</span> enumerate(l):</span><br><span class="line">    print(<span class="selector-tag">i</span>, b)</span><br></pre></td></tr></table></figure>
+<p>就会输出</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">0 </span>s</span><br><span class="line"><span class="symbol">1 </span>d</span><br></pre></td></tr></table></figure>
+<p>但是在模板里不方便这样。可以看jinja的文档 <code>for</code> <a href="http://jinja.pocoo.org/docs/templates/#for" target="_blank" rel="noopener">http://jinja.pocoo.org/docs/templates/#for</a>。<br><br>用 <code>variable</code> 里的 <code>loop.index</code> 实现 以 <code>1</code> 开始的索引数。</p>
+<h1 id="flask-mail"><a href="#flask-mail" class="headerlink" title="flask-mail"></a>flask-mail</h1><hr>
+<p>官方文档：<a href="http://pythonhosted.org/flask-mail/" target="_blank" rel="noopener">http://pythonhosted.org/flask-mail/</a><br><br>下面是用126邮箱的例子，<img src="http://img4.cache.netease.com/help/2011/2/1/20110201095104ff8bc.png" alt="126的文档"></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># email server</span></span><br><span class="line"><span class="attr">MAIL_SERVER</span> = <span class="string">'smtp.126.com'</span></span><br><span class="line"><span class="attr">MAIL_PORT</span> = <span class="number">465</span></span><br><span class="line"><span class="attr">MAIL_USE_TLS</span> = <span class="literal">False</span></span><br><span class="line"><span class="attr">MAIL_USE_SSL</span> = <span class="literal">True</span></span><br><span class="line"><span class="attr">MAIL_USERNAME</span> = 邮箱用户名</span><br><span class="line"><span class="attr">MAIL_PASSWORD</span> = 邮箱密码</span><br></pre></td></tr></table></figure>
+<p>是用app.config来配置，app＝Flask(<strong>name</strong>)<br><br>文档有的就不说了，我来说说我碰到的问题。</p>
+<p>1.说不在上下文中<br><br>需要 <code>@copy_current_request_context</code> ,<br><br>从 <code>from flask import copy_current_request_context</code> 引入。 而且还必须在路由视图里才有效，不然还会报其他错误。</p>
+<p>2.smtplib报encode(‘ascii’)错<br><br>把764行的 <code>msg = _fix_eols(msg).encode(&#39;ascii&#39;)</code> 改为<br><br><code>msg = _fix_eols(msg).encode()</code> , 他在python安装目录里面。<br><br>具体看他报错的信息吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/flask/" rel="tag"># flask</a>
+          
+            <a href="/tags/mongodb/" rel="tag"># mongodb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/07/04/flash-nexus-rom-in-mac/" rel="next" title="mac下刷nexus官方包">
+                <i class="fa fa-chevron-left"></i> mac下刷nexus官方包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/07/31/mac-virtualbox-VBoxGuestAdditions/" rel="prev" title="mac下virtualbox下载安装VBoxGuestAdditions">
+                mac下virtualbox下载安装VBoxGuestAdditions <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">dust8</p>
+              <p class="site-description motion-element" itemprop="description">读书百遍其义自见</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dust8" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.the5fire.com/" title="the5fire" target="_blank">the5fire</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Flask-MongoEngine"><span class="nav-number">1.</span> <span class="nav-text">Flask-MongoEngine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flask-Login"><span class="nav-number">2.</span> <span class="nav-text">Flask-Login</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jinja"><span class="nav-number">3.</span> <span class="nav-text">jinja</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#flask-mail"><span class="nav-number">4.</span> <span class="nav-text">flask-mail</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dust8</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

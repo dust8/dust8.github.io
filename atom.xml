@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Dust8 的博客</title>
+  
+  <subtitle>读书百遍其义自见</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://dust8.github.io/blog/"/>
+  <updated>2021-07-15T13:15:09.996Z</updated>
+  <id>https://dust8.github.io/blog/</id>
+  
+  <author>
+    <name>dust8</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从问题到开源之django-simpleui-captcha项目</title>
+    <link href="https://dust8.github.io/blog/2021/07/15/django-simpleui-captcha/"/>
+    <id>https://dust8.github.io/blog/2021/07/15/django-simpleui-captcha/</id>
+    <published>2021-07-15T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;&lt;code&gt;django&lt;/code&gt; 自带的后台管理比较丑, 就使用了 &lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="django-admin" scheme="https://dust8.github.io/blog/tags/django-admin/"/>
+    
+      <category term="django-simpleui-captcha" scheme="https://dust8.github.io/blog/tags/django-simpleui-captcha/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django之save_model</title>
+    <link href="https://dust8.github.io/blog/2021/03/26/django-save_model/"/>
+    <id>https://dust8.github.io/blog/2021/03/26/django-save_model/</id>
+    <published>2021-03-26T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="django-admin" scheme="https://dust8.github.io/blog/tags/django-admin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django之DATA_UPLOAD_MAX_NUMBER_FIELDS</title>
+    <link href="https://dust8.github.io/blog/2021/03/25/django-upload-fields/"/>
+    <id>https://dust8.github.io/blog/2021/03/25/django-upload-fields/</id>
+    <published>2021-03-25T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://docs.djangoproject.com/zh-hans/3.1/ref/settings/#std:setting-DATA_UPLOAD_MAX_NUMBER_FIELDS&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django-filter使用</title>
+    <link href="https://dust8.github.io/blog/2021/01/12/django-filter/"/>
+    <id>https://dust8.github.io/blog/2021/01/12/django-filter/</id>
+    <published>2021-01-12T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://django-filter.readthedocs.io/en/stable/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;django-filter&lt;/a&gt; 可以用来过滤查询. 跟 &lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="django-filter" scheme="https://dust8.github.io/blog/tags/django-filter/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django-import-export使用</title>
+    <link href="https://dust8.github.io/blog/2020/12/24/django-import-export/"/>
+    <id>https://dust8.github.io/blog/2020/12/24/django-import-export/</id>
+    <published>2020-12-24T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://github.com/django-import-export/django-import-export&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="django-import-export" scheme="https://dust8.github.io/blog/tags/django-import-export/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django与压测和容量预估</title>
+    <link href="https://dust8.github.io/blog/2020/12/12/django/"/>
+    <id>https://dust8.github.io/blog/2020/12/12/django/</id>
+    <published>2020-12-12T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;原理：每天80%的访问集中在20%的时间里，这20%时间叫做峰值时间
+公式：( 总PV数 * 80% ) / ( 每天秒数 * 20% ) = 峰值时间每秒请求数(QPS)   
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="locust" scheme="https://dust8.github.io/blog/tags/locust/"/>
+    
+      <category term="goaccess" scheme="https://dust8.github.io/blog/tags/goaccess/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django与后台自定义导航</title>
+    <link href="https://dust8.github.io/blog/2020/12/10/django-custom-nav/"/>
+    <id>https://dust8.github.io/blog/2020/12/10/django-custom-nav/</id>
+    <published>2020-12-10T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;有些自定义的后台页面, 但是有权限才能操作. 用的 &lt;code&gt;simpleui&lt;/code&gt; 不支持权限, &lt;code&gt;simple pro&lt;/code&gt; 才支持, 不是免费的. 只能自己定制.&lt;/p&gt;
+&lt;h2 id=&quot;添加后台自定义导航&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="admin" scheme="https://dust8.github.io/blog/tags/admin/"/>
+    
+      <category term="simpleui" scheme="https://dust8.github.io/blog/tags/simpleui/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django与SESSION_COOKIE_NAME</title>
+    <link href="https://dust8.github.io/blog/2020/12/08/django-session_cookie_name/"/>
+    <id>https://dust8.github.io/blog/2020/12/08/django-session_cookie_name/</id>
+    <published>2020-12-08T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在服务器用端口部署了多个 &lt;code&gt;django&lt;/code&gt; 后台, 导致只能登录一个后台, 登录信息被覆盖了.&lt;br&gt;查了下可以更改配置文件里面的 &lt;code&gt;SESSION_COOKIE_NAME&lt;/code&gt; 来区分登录信息.&lt;br&gt;默认的值是
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django与coalesce</title>
+    <link href="https://dust8.github.io/blog/2020/12/01/django-coalesce/"/>
+    <id>https://dust8.github.io/blog/2020/12/01/django-coalesce/</id>
+    <published>2020-12-01T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在 &lt;code&gt;django&lt;/code&gt; 使用统计 &lt;code&gt;annotate&lt;/code&gt; 和 &lt;code&gt;aggregate&lt;/code&gt; 时由于没有数据导致统计是 &lt;code&gt;null&lt;/code&gt; , 而不是
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="mysql" scheme="https://dust8.github.io/blog/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql unicode 编码内容的查询</title>
+    <link href="https://dust8.github.io/blog/2020/11/21/mysql-unicode-query/"/>
+    <id>https://dust8.github.io/blog/2020/11/21/mysql-unicode-query/</id>
+    <published>2020-11-21T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;code&gt;django&lt;/code&gt; 升级后 &lt;code&gt;django_admin_log&lt;/code&gt; 表里面的 &lt;code&gt;change_message&lt;/code&gt; 字段里面的内容变成了中文, 估计是记录字段的 &lt;code&gt;verbose_name&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="mysql" scheme="https://dust8.github.io/blog/tags/mysql/"/>
+    
+      <category term="unicode" scheme="https://dust8.github.io/blog/tags/unicode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用pt-archiver数据库归档</title>
+    <link href="https://dust8.github.io/blog/2020/11/15/pt-archiver/"/>
+    <id>https://dust8.github.io/blog/2020/11/15/pt-archiver/</id>
+    <published>2020-11-15T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;安装-pt-archiver&quot;&gt;&lt;a href=&quot;#安装-pt-archiver&quot; class=&quot;headerlink&quot; title=&quot;安装 pt-archiver&quot;&gt;&lt;/a&gt;安装
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="pt-archiver" scheme="https://dust8.github.io/blog/tags/pt-archiver/"/>
+    
+      <category term="mysql" scheme="https://dust8.github.io/blog/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>records 源码阅读</title>
+    <link href="https://dust8.github.io/blog/2020/10/25/records-source-read/"/>
+    <id>https://dust8.github.io/blog/2020/10/25/records-source-read/</id>
+    <published>2020-10-25T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://github.com/kennethreitz-archive/records&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;kennethreitz-archive/records&lt;/a&gt;:&lt;br&gt;Records:
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="python" scheme="https://dust8.github.io/blog/tags/python/"/>
+    
+      <category term="源码阅读" scheme="https://dust8.github.io/blog/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django查询的坑</title>
+    <link href="https://dust8.github.io/blog/2020/08/24/django-queryset-mistake/"/>
+    <id>https://dust8.github.io/blog/2020/08/24/django-queryset-mistake/</id>
+    <published>2020-08-24T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;这些坑都是官方文档有说明的, 但是二手资料太多, 误人啊.&lt;/p&gt;
+&lt;h2 id=&quot;F-表达式的坑&quot;&gt;&lt;a href=&quot;#F-表达式的坑&quot; class=&quot;headerlink&quot; title=&quot;F 表达式的坑&quot;&gt;&lt;/a&gt;F 表达式的坑&lt;/h2&gt;&lt;p&gt;为了避免条件竞争,
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vue与table</title>
+    <link href="https://dust8.github.io/blog/2020/08/18/vue-table/"/>
+    <id>https://dust8.github.io/blog/2020/08/18/vue-table/</id>
+    <published>2020-08-18T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近有个后台表格需要排序功能, 原生的感觉麻烦, 就选用了 &lt;a href=&quot;https://element.eleme.cn/#/zh-CN&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Element&lt;/a&gt; 来做.&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="vue" scheme="https://dust8.github.io/blog/tags/vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>爬虫与docker</title>
+    <link href="https://dust8.github.io/blog/2020/08/17/craw-docker/"/>
+    <id>https://dust8.github.io/blog/2020/08/17/craw-docker/</id>
+    <published>2020-08-17T05:16:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近又写了个爬虫, 爬美团的商家.总结一下新写法.&lt;br&gt;因为接口是加密的,懒得去找参数了,直接用浏览器渲染, 试了下 &lt;code&gt;request-html&lt;/code&gt; 效果不好, 也不想用 &lt;code&gt;pyppeteer&lt;/code&gt; 来写, 选择了无脑的渲染服务
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="docker" scheme="https://dust8.github.io/blog/tags/docker/"/>
+    
+      <category term="爬虫" scheme="https://dust8.github.io/blog/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django与数据库视图</title>
+    <link href="https://dust8.github.io/blog/2020/08/17/django-database-view/"/>
+    <id>https://dust8.github.io/blog/2020/08/17/django-database-view/</id>
+    <published>2020-08-17T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;项目里面使用了视图, 使用的时候报错 &lt;code&gt;Unknown column &amp;#39;xxx.id&amp;#39; in &amp;#39;field list&amp;#39;&lt;/code&gt;.&lt;br&gt;原因是 &lt;code&gt;django&lt;/code&gt; 模型里面必须有主键,
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django源码阅读-查询字段映射</title>
+    <link href="https://dust8.github.io/blog/2020/08/09/django-source-read-query-filed-map/"/>
+    <id>https://dust8.github.io/blog/2020/08/09/django-source-read-query-filed-map/</id>
+    <published>2020-08-09T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在 &lt;a href=&quot;https://docs.djangoproject.com/zh-hans/3.1/topics/db/sql/#performing-raw-queries&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;django
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="源码阅读" scheme="https://dust8.github.io/blog/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows Terminal 使用及美化</title>
+    <link href="https://dust8.github.io/blog/2020/07/03/windows-terminal/"/>
+    <id>https://dust8.github.io/blog/2020/07/03/windows-terminal/</id>
+    <published>2020-07-03T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;安装软件&quot;&gt;&lt;a href=&quot;#安装软件&quot; class=&quot;headerlink&quot; title=&quot;安装软件&quot;&gt;&lt;/a&gt;安装软件&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/PowerShell/PowerShell&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Windows Terminal" scheme="https://dust8.github.io/blog/tags/Windows-Terminal/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>js 直传文件到阿里云 oss</title>
+    <link href="https://dust8.github.io/blog/2020/06/20/js-zhichuan-oss/"/>
+    <id>https://dust8.github.io/blog/2020/06/20/js-zhichuan-oss/</id>
+    <published>2020-06-20T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;js 从服务端获取 policy 后直传阿里云 oss.&lt;br&gt;实际并不需要用 demo 里面的插件, 原生 js 更容易理解.&lt;br&gt;服务端和客户端的 demo 都让人更糊涂, 估计是外包弄的, 水平不是一般的次.&lt;/p&gt;
+&lt;figure
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="javascript" scheme="https://dust8.github.io/blog/tags/javascript/"/>
+    
+      <category term="oss" scheme="https://dust8.github.io/blog/tags/oss/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>django 导出 excel 文件</title>
+    <link href="https://dust8.github.io/blog/2020/05/24/django-export-excel/"/>
+    <id>https://dust8.github.io/blog/2020/05/24/django-export-excel/</id>
+    <published>2020-05-24T05:15:31.000Z</published>
+    <updated>2021-07-15T13:15:09.996Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;code&gt;django admin&lt;/code&gt; 后台需要导出 &lt;code&gt;excel&lt;/code&gt; 文件. 除了用插件, 也可以自己简单的实现.&lt;br&gt;&lt;code&gt;lib&lt;/code&gt; 目录是一些自己写的库, 在 &lt;code&gt;settings&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="python" scheme="https://dust8.github.io/blog/tags/python/"/>
+    
+      <category term="django" scheme="https://dust8.github.io/blog/tags/django/"/>
+    
+      <category term="excel" scheme="https://dust8.github.io/blog/tags/excel/"/>
+    
+  </entry>
+  
+</feed>

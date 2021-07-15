@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/assert/avatar.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="go,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dust8 的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="我用的是官网中文网站练习的。中文练习网站： http://go-tour-zh.appspot.com/中文翻译害死人，不知道是不是机翻的。我按我的理解翻译一遍。 意译练习：Slices 实现 Pic。 它返回一个长度为 dy 的 slice 类型。而这个长度为 dy 的 slice 类型里面的每一个元素是一个长度为 dx 的 slice 类型，它的值是一个 8 位的无符号整数。 当你运行程序，它">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="a-tour-of-go-exercise-slices.go实现">
+<meta property="og:url" content="https://dust8.github.io/blog/2014/12/13/a-tour-of-go-exercise-slices.go/index.html">
+<meta property="og:site_name" content="Dust8 的博客">
+<meta property="og:description" content="我用的是官网中文网站练习的。中文练习网站： http://go-tour-zh.appspot.com/中文翻译害死人，不知道是不是机翻的。我按我的理解翻译一遍。 意译练习：Slices 实现 Pic。 它返回一个长度为 dy 的 slice 类型。而这个长度为 dy 的 slice 类型里面的每一个元素是一个长度为 dx 的 slice 类型，它的值是一个 8 位的无符号整数。 当你运行程序，它">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://dust8.github.io/assert/2014-12-13-exercise-slices-1.png">
+<meta property="og:image" content="https://dust8.github.io/assert/2014-12-13-exercise-slices-2.png">
+<meta property="og:image" content="https://dust8.github.io/assert/2014-12-13-exercise-slices-3.png">
+<meta property="og:updated_time" content="2021-07-15T13:15:09.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="a-tour-of-go-exercise-slices.go实现">
+<meta name="twitter:description" content="我用的是官网中文网站练习的。中文练习网站： http://go-tour-zh.appspot.com/中文翻译害死人，不知道是不是机翻的。我按我的理解翻译一遍。 意译练习：Slices 实现 Pic。 它返回一个长度为 dy 的 slice 类型。而这个长度为 dy 的 slice 类型里面的每一个元素是一个长度为 dx 的 slice 类型，它的值是一个 8 位的无符号整数。 当你运行程序，它">
+<meta name="twitter:image" content="https://dust8.github.io/assert/2014-12-13-exercise-slices-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dust8.github.io/blog/2014/12/13/a-tour-of-go-exercise-slices.go/">
+
+
+
+
+
+  <title>a-tour-of-go-exercise-slices.go实现 | Dust8 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dust8 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">读书百遍其义自见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dust8.github.io/blog/2014/12/13/a-tour-of-go-exercise-slices.go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dust8">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dust8 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">a-tour-of-go-exercise-slices.go实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-13T20:00:00+00:00">
+                2014-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我用的是官网中文网站练习的。<br><br>中文练习网站： <a href="http://go-tour-zh.appspot.com/" target="_blank" rel="noopener">http://go-tour-zh.appspot.com/</a><br><br>中文翻译害死人，不知道是不是机翻的。<br><br>我按我的理解翻译一遍。</p>
+<h1 id="意译"><a href="#意译" class="headerlink" title="意译"></a>意译</h1><p>练习：<code>Slices</code></p>
+<p>实现 <code>Pic</code>。 它返回一个长度为 <code>dy</code> 的 <code>slice</code> 类型。<br><br>而这个长度为 <code>dy</code> 的 <code>slice</code> 类型里面的每一个元素是一个长度为 <code>dx</code> 的 <code>slice</code> 类型，<br><br>它的值是一个 <code>8</code> 位的无符号整数。 当你运行程序，它将会显示你的图像，<br><br>这个图像是由你返回的那个 <code>8</code> 位无符号整数作为图像的灰度(或者是蓝度)值生成的。</p>
+<p>由你决定函数去生成图片。<br><br>下面是一些有趣的函数，有 <code>(x+y)/2</code> , <code>x*y</code>, 和 <code>x^y</code> (最后一个函数可以用 <code>math.Pow</code> 实现计算方值)。</p>
+<p>（你需要使用循环来分配 <code>[][]uint8</code> 中的每一个 <code>[]uint8</code>。）<br><br>（使用 <code>uint8(intValue)</code> 在类型之间进行转换。）</p>
+<h1 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h1><p>本题的本意其实就是要生成一个 2 维的整数数组。<br><br>那些函数只是决定生成的图像的样子，并不是考察的目的所在。</p>
+<p>代码实现如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"code.google.com/p/go-tour/pic"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Value</span><span class="params">(x, y <span class="keyword">int</span>)</span> <span class="title">uint8</span></span> &#123;</span><br><span class="line">    <span class="comment">// 有趣的函数有 (x+y)/2, x*y, and x^y</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">uint8</span>((x + y) / <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Pic</span><span class="params">(dx, dy <span class="keyword">int</span>)</span> [][]<span class="title">uint8</span></span> &#123;</span><br><span class="line">    ret := <span class="built_in">make</span>([][]<span class="keyword">uint8</span>, dy)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; dy; i++ &#123;</span><br><span class="line">        ret[i] = <span class="built_in">make</span>([]<span class="keyword">uint8</span>, dx)</span><br><span class="line">        <span class="keyword">for</span> j := <span class="number">0</span>; j &lt; dx; j++ &#123;</span><br><span class="line">            ret[i][j] = Value(i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    pic.Show(Pic)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="有趣的函数生成的图像"><a href="#有趣的函数生成的图像" class="headerlink" title="有趣的函数生成的图像"></a>有趣的函数生成的图像</h1><ol>
+<li><p><code>(x+y)/2</code><br><br><img src="/assert/2014-12-13-exercise-slices-1.png" alt="(x+y)/2"></p>
+</li>
+<li><p><code>x*y</code><br><br><img src="/assert/2014-12-13-exercise-slices-2.png" alt="x*y"></p>
+</li>
+<li><p><code>x^y</code><br><br><img src="/assert/2014-12-13-exercise-slices-3.png" alt="x^y"></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/28/cygwin/" rel="next" title="Cygwin安装使用">
+                <i class="fa fa-chevron-left"></i> Cygwin安装使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/03/my-js-lib-timejs/" rel="prev" title="我的js格式化时间戳库timejs">
+                我的js格式化时间戳库timejs <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">dust8</p>
+              <p class="site-description motion-element" itemprop="description">读书百遍其义自见</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dust8" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.the5fire.com/" title="the5fire" target="_blank">the5fire</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#意译"><span class="nav-number">1.</span> <span class="nav-text">意译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题"><span class="nav-number">2.</span> <span class="nav-text">解题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有趣的函数生成的图像"><span class="nav-number">3.</span> <span class="nav-text">有趣的函数生成的图像</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dust8</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

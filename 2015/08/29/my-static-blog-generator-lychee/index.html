@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/assert/avatar.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="lychee,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dust8 的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前段时间搞了个静态博客生成器.lychee, 源码: github.代码很简陋,不过勉强可以用. 问题: 现在这类工具很多,为啥还要自己弄我用python的,什么都想用python解决,可以少装一些软件 问题:也有python写得,为啥不用用得库太多,兼容性差,和其他语言一样,安装时出现各种问题  最主要的原因是,自己写一个可以学些东西,就算比较差,也很有成就感. 它是我的第一个发布到 pypi">
+<meta name="keywords" content="lychee">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的静态博客生成器--lychee">
+<meta property="og:url" content="https://dust8.github.io/blog/2015/08/29/my-static-blog-generator-lychee/index.html">
+<meta property="og:site_name" content="Dust8 的博客">
+<meta property="og:description" content="前段时间搞了个静态博客生成器.lychee, 源码: github.代码很简陋,不过勉强可以用. 问题: 现在这类工具很多,为啥还要自己弄我用python的,什么都想用python解决,可以少装一些软件 问题:也有python写得,为啥不用用得库太多,兼容性差,和其他语言一样,安装时出现各种问题  最主要的原因是,自己写一个可以学些东西,就算比较差,也很有成就感. 它是我的第一个发布到 pypi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-15T13:15:09.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我的静态博客生成器--lychee">
+<meta name="twitter:description" content="前段时间搞了个静态博客生成器.lychee, 源码: github.代码很简陋,不过勉强可以用. 问题: 现在这类工具很多,为啥还要自己弄我用python的,什么都想用python解决,可以少装一些软件 问题:也有python写得,为啥不用用得库太多,兼容性差,和其他语言一样,安装时出现各种问题  最主要的原因是,自己写一个可以学些东西,就算比较差,也很有成就感. 它是我的第一个发布到 pypi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dust8.github.io/blog/2015/08/29/my-static-blog-generator-lychee/">
+
+
+
+
+
+  <title>我的静态博客生成器--lychee | Dust8 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dust8 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">读书百遍其义自见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dust8.github.io/blog/2015/08/29/my-static-blog-generator-lychee/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dust8">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dust8 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">我的静态博客生成器--lychee</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-29T20:00:00+00:00">
+                2015-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前段时间搞了个静态博客生成器.<br><br><code>lychee</code>, 源码: <a href="https://github.com/dust8/lychee" target="_blank" rel="noopener">github</a>.<br><br>代码很简陋,不过勉强可以用.</p>
+<h1 id="问题-现在这类工具很多-为啥还要自己弄"><a href="#问题-现在这类工具很多-为啥还要自己弄" class="headerlink" title="问题: 现在这类工具很多,为啥还要自己弄"></a>问题: 现在这类工具很多,为啥还要自己弄</h1><p>我用python的,什么都想用python解决,可以少装一些软件</p>
+<h1 id="问题-也有python写得-为啥不用"><a href="#问题-也有python写得-为啥不用" class="headerlink" title="问题:也有python写得,为啥不用"></a>问题:也有python写得,为啥不用</h1><p>用得库太多,兼容性差,和其他语言一样,安装时出现各种问题</p>
+<hr>
+<p>最主要的原因是,自己写一个可以学些东西,就算比较差,也很有成就感.</p>
+<p>它是我的第一个发布到 <code>pypi</code> 得工具,可以通过 <code>pip</code> 安装.</p>
+<p>以下是我的一些经验:</p>
+<h1 id="打包的时候-templates等文件没有打包进去"><a href="#打包的时候-templates等文件没有打包进去" class="headerlink" title="打包的时候, templates等文件没有打包进去"></a>打包的时候, templates等文件没有打包进去</h1><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MANIFEST.<span class="keyword">in</span></span><br><span class="line"><span class="keyword">recursive</span>-<span class="keyword">include</span> lychee/templates *</span><br><span class="line"><span class="keyword">recursive</span>-<span class="keyword">include</span> lychee/posts *</span><br><span class="line"><span class="keyword">recursive</span>-<span class="keyword">include</span> lychee/static *</span><br><span class="line"></span><br><span class="line">setup.py</span><br><span class="line">include_package_data=<span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h1 id="如何复制包里的数据到其他地方"><a href="#如何复制包里的数据到其他地方" class="headerlink" title="如何复制包里的数据到其他地方"></a>如何复制包里的数据到其他地方</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">os</span><span class="selector-class">.path</span><span class="selector-class">.abspath</span>(__<span class="selector-tag">file__</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="如何获取现在命令行的路径"><a href="#如何获取现在命令行的路径" class="headerlink" title="如何获取现在命令行的路径"></a>如何获取现在命令行的路径</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">os</span><span class="selector-class">.getcwd</span>()</span><br></pre></td></tr></table></figure>
+<h1 id="如何改变运行的路径"><a href="#如何改变运行的路径" class="headerlink" title="如何改变运行的路径"></a>如何改变运行的路径</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">os</span><span class="selector-class">.chdir</span>()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/lychee/" rel="tag"># lychee</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/03/my-js-lib-timejs/" rel="next" title="我的js格式化时间戳库timejs">
+                <i class="fa fa-chevron-left"></i> 我的js格式化时间戳库timejs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/20/yield-and-yield-from/" rel="prev" title="yield 和 yield from 的理解">
+                yield 和 yield from 的理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">dust8</p>
+              <p class="site-description motion-element" itemprop="description">读书百遍其义自见</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dust8" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.the5fire.com/" title="the5fire" target="_blank">the5fire</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题-现在这类工具很多-为啥还要自己弄"><span class="nav-number">1.</span> <span class="nav-text">问题: 现在这类工具很多,为啥还要自己弄</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题-也有python写得-为啥不用"><span class="nav-number">2.</span> <span class="nav-text">问题:也有python写得,为啥不用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打包的时候-templates等文件没有打包进去"><span class="nav-number">3.</span> <span class="nav-text">打包的时候, templates等文件没有打包进去</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何复制包里的数据到其他地方"><span class="nav-number">4.</span> <span class="nav-text">如何复制包里的数据到其他地方</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何获取现在命令行的路径"><span class="nav-number">5.</span> <span class="nav-text">如何获取现在命令行的路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何改变运行的路径"><span class="nav-number">6.</span> <span class="nav-text">如何改变运行的路径</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dust8</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

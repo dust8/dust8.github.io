@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/assert/avatar.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="powershell,dns,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dust8 的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="最近碰到把一个二级域名误解析到了2个ip上,导致接口调不通.应为dns是可以这样操作的,所以添加的时候没有报错.因此需要添加域名指向后要确认下是否指向正确. 示例query_dns.ps11234567891011121314151617181920function PrintTitle($title)&amp;#123;    $sep = &apos;+&apos; *80    $sep    &apos;+        &amp;#">
+<meta name="keywords" content="powershell,dns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="powershell查询dns">
+<meta property="og:url" content="https://dust8.github.io/blog/2018/10/07/powershell-dns/index.html">
+<meta property="og:site_name" content="Dust8 的博客">
+<meta property="og:description" content="最近碰到把一个二级域名误解析到了2个ip上,导致接口调不通.应为dns是可以这样操作的,所以添加的时候没有报错.因此需要添加域名指向后要确认下是否指向正确. 示例query_dns.ps11234567891011121314151617181920function PrintTitle($title)&amp;#123;    $sep = &apos;+&apos; *80    $sep    &apos;+        &amp;#">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-15T13:15:09.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="powershell查询dns">
+<meta name="twitter:description" content="最近碰到把一个二级域名误解析到了2个ip上,导致接口调不通.应为dns是可以这样操作的,所以添加的时候没有报错.因此需要添加域名指向后要确认下是否指向正确. 示例query_dns.ps11234567891011121314151617181920function PrintTitle($title)&amp;#123;    $sep = &apos;+&apos; *80    $sep    &apos;+        &amp;#">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dust8.github.io/blog/2018/10/07/powershell-dns/">
+
+
+
+
+
+  <title>powershell查询dns | Dust8 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dust8 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">读书百遍其义自见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dust8.github.io/blog/2018/10/07/powershell-dns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dust8">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dust8 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">powershell查询dns</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-07T05:15:31+00:00">
+                2018-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近碰到把一个二级域名误解析到了2个ip上,导致接口调不通.<br>应为dns是可以这样操作的,所以添加的时候没有报错.因此需要添加域名指向后要确认下是否指向正确.</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="query-dns-ps1"><a href="#query-dns-ps1" class="headerlink" title="query_dns.ps1"></a>query_dns.ps1</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">PrintTitle</span><span class="params">(<span class="variable">$title</span>)</span></span>&#123;</span><br><span class="line">    <span class="variable">$sep</span> = <span class="string">'+'</span> *<span class="number">80</span></span><br><span class="line">    <span class="variable">$sep</span></span><br><span class="line">    <span class="string">'+        &#123;0&#125;&#123;1&#125;+'</span> <span class="operator">-f</span> <span class="variable">$title</span>,(<span class="string">' '</span>*(<span class="number">80</span><span class="literal">-10</span>-<span class="variable">$title</span>.length))</span><br><span class="line">    <span class="variable">$sep</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取本ds 服务器地址</span></span><br><span class="line">PrintTitle(<span class="string">'1. DnsClientServerAddress'</span>)</span><br><span class="line"><span class="built_in">Get-DnsClientServerAddress</span> <span class="literal">-AddressFamily</span> IPv4</span><br><span class="line"><span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清空 dns 缓存 </span></span><br><span class="line">PrintTitle(<span class="string">'2. Flushdns'</span>)</span><br><span class="line">ipconfig /flushdns</span><br><span class="line"><span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询域名的 dns</span></span><br><span class="line">PrintTitle(<span class="string">'3. Resolve-DnsName for domain_waiting_to_be_queried.txt'</span>)</span><br><span class="line"><span class="built_in">Get-Content</span> <span class="string">'domain_waiting_to_be_queried.txt'</span> | <span class="built_in">Resolve-DnsName</span> <span class="literal">-Type</span> A | <span class="built_in">Format-Table</span> <span class="literal">-Autosize</span></span><br></pre></td></tr></table></figure>
+<h3 id="domain-waiting-to-be-queried-txt"><a href="#domain-waiting-to-be-queried-txt" class="headerlink" title="domain_waiting_to_be_queried.txt"></a>domain_waiting_to_be_queried.txt</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">google</span><span class="selector-class">.com</span></span><br><span class="line"><span class="selector-tag">bing</span><span class="selector-class">.com</span></span><br><span class="line"><span class="selector-tag">baidu</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">+        1. DnsClientServerAddress                                             +</span><br><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">InterfaceAlias              <span class="built_in"> Interface Address </span>ServerAddresses</span><br><span class="line">                             Index     Family</span><br><span class="line">--------------               --------- ------- ---------------</span><br><span class="line">以太网                              21 IPv4    &#123;&#125;</span><br><span class="line">vEthernet (DockerNAT)               49 IPv4    &#123;&#125;</span><br><span class="line">本地连接* 11                        14 IPv4    &#123;&#125;</span><br><span class="line">本地连接* 1                          4 IPv4    &#123;&#125;</span><br><span class="line">以太网 2                            16 IPv4    &#123;&#125;</span><br><span class="line">WLAN                                15 IPv4    &#123;192.168.0.1&#125;</span><br><span class="line">蓝牙网络连接                        12 IPv4    &#123;&#125;</span><br><span class="line">Loopback Pseudo-Interface 1          1 IPv4    &#123;&#125;</span><br><span class="line">vEthernet (Default Switch)          24 IPv4    &#123;&#125;</span><br><span class="line"></span><br><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">+        2. Flushdns                                                           +</span><br><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">Windows<span class="built_in"> IP </span>配置</span><br><span class="line"></span><br><span class="line">已成功刷新<span class="built_in"> DNS </span>解析缓存。</span><br><span class="line"></span><br><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">+        3. Resolve-DnsName <span class="keyword">for</span> domain_waiting_to_be_queried.txt               +</span><br><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Name      <span class="built_in"> Type </span>TTL Section IPAddress</span><br><span class="line">----       ---- --- ------- ---------</span><br><span class="line">google.com A    300 Answer  216.58.220.206</span><br><span class="line">bing.com   A    300 Answer  204.79.197.200</span><br><span class="line">bing.com   A    300 Answer  13.107.21.200</span><br><span class="line">baidu.com  A    386 Answer  123.125.115.110</span><br><span class="line">baidu.com  A    386 Answer  220.181.57.216</span><br></pre></td></tr></table></figure>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><a href="https://www.pstips.net/question/3966.html" target="_blank" rel="noopener">PowerShell如何解析DNS</a></li>
+<li><a href="https://msdn.microsoft.com/zh-cn/library/windows/desktop/jj590772(v=wps.630" target="_blank" rel="noopener">DNS Client Cmdlets in Windows PowerShell</a>.aspx)</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/powershell/" rel="tag"># powershell</a>
+          
+            <a href="/tags/dns/" rel="tag"># dns</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/03/jupyter-notebook-mind/" rel="next" title="dmind 一个jupyter notebook 思维导图插件">
+                <i class="fa fa-chevron-left"></i> dmind 一个jupyter notebook 思维导图插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/20/fuzzywuzzy/" rel="prev" title="fuzzywuzzy字符串模糊匹配">
+                fuzzywuzzy字符串模糊匹配 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">dust8</p>
+              <p class="site-description motion-element" itemprop="description">读书百遍其义自见</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dust8" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.the5fire.com/" title="the5fire" target="_blank">the5fire</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">1.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#query-dns-ps1"><span class="nav-number">1.1.</span> <span class="nav-text">query_dns.ps1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#domain-waiting-to-be-queried-txt"><span class="nav-number">1.2.</span> <span class="nav-text">domain_waiting_to_be_queried.txt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出"><span class="nav-number">2.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-number">3.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dust8</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assert/avatar.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/assert/avatar.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dht,bt,crawler,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dust8 的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言好几年前就开始接触 dht 了，那时还是 小虾 引起的潮流.大概原理基本都了解了, 就是代码写的难看，执行效率也不高。这几年有很多人也接触到这些，开源了不少简洁而又高效的代码。 技术表B 编码我用的是 python3, 不是主流，所以要自己写编码和解码，有了 bencoding。 官方的库bencode, 它只支持 python2. 非官方的库bencoder.pyx, A fast benc">
+<meta name="keywords" content="dht,bt,crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bt爬虫系统">
+<meta property="og:url" content="https://dust8.github.io/blog/2016/06/02/bt-crawler-system/index.html">
+<meta property="og:site_name" content="Dust8 的博客">
+<meta property="og:description" content="前言好几年前就开始接触 dht 了，那时还是 小虾 引起的潮流.大概原理基本都了解了, 就是代码写的难看，执行效率也不高。这几年有很多人也接触到这些，开源了不少简洁而又高效的代码。 技术表B 编码我用的是 python3, 不是主流，所以要自己写编码和解码，有了 bencoding。 官方的库bencode, 它只支持 python2. 非官方的库bencoder.pyx, A fast benc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://dust8.github.io/assert/2016-06-02-bt-crawler-system.PNG">
+<meta property="og:updated_time" content="2021-07-15T13:15:09.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bt爬虫系统">
+<meta name="twitter:description" content="前言好几年前就开始接触 dht 了，那时还是 小虾 引起的潮流.大概原理基本都了解了, 就是代码写的难看，执行效率也不高。这几年有很多人也接触到这些，开源了不少简洁而又高效的代码。 技术表B 编码我用的是 python3, 不是主流，所以要自己写编码和解码，有了 bencoding。 官方的库bencode, 它只支持 python2. 非官方的库bencoder.pyx, A fast benc">
+<meta name="twitter:image" content="https://dust8.github.io/assert/2016-06-02-bt-crawler-system.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dust8.github.io/blog/2016/06/02/bt-crawler-system/">
+
+
+
+
+
+  <title>bt爬虫系统 | Dust8 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dust8 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">读书百遍其义自见</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dust8.github.io/blog/2016/06/02/bt-crawler-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dust8">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dust8 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bt爬虫系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-02T11:49:36+00:00">
+                2016-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>好几年前就开始接触 <code>dht</code> 了，那时还是 <code>小虾</code> 引起的潮流.<br>大概原理基本都了解了, 就是代码写的难看，执行效率也不高。<br>这几年有很多人也接触到这些，开源了不少简洁而又高效的代码。</p>
+<h1 id="技术表"><a href="#技术表" class="headerlink" title="技术表"></a>技术表</h1><h2 id="B-编码"><a href="#B-编码" class="headerlink" title="B 编码"></a>B 编码</h2><p>我用的是 <code>python3</code>, 不是主流，所以要自己写编码和解码，有了 <a href="https://github.com/dust8/bencoding" target="_blank" rel="noopener">bencoding</a>。</p>
+<h3 id="官方的库"><a href="#官方的库" class="headerlink" title="官方的库"></a>官方的库</h3><p><a href="https://github.com/bittorrent/bencode" target="_blank" rel="noopener">bencode</a>, 它只支持 <code>python2</code>.</p>
+<h3 id="非官方的库"><a href="#非官方的库" class="headerlink" title="非官方的库"></a>非官方的库</h3><p><a href="https://github.com/whtsky/bencoder.pyx" target="_blank" rel="noopener">bencoder.pyx</a>, A fast bencode implementation in Cython.</p>
+<h2 id="infohash-的抓取"><a href="#infohash-的抓取" class="headerlink" title="infohash 的抓取"></a>infohash 的抓取</h2><h3 id="官方的-bootstrap-dht"><a href="#官方的-bootstrap-dht" class="headerlink" title="官方的 bootstrap-dht"></a>官方的 bootstrap-dht</h3><p><a href="https://github.com/bittorrent/bootstrap-dht" target="_blank" rel="noopener">bootstrap-dht</a>, 它简单的示例了下 <code>dht</code> 启动服务器。</p>
+<h3 id="非官方的"><a href="#非官方的" class="headerlink" title="非官方的"></a>非官方的</h3><ul>
+<li><p><a href="https://github.com/Fuck-You-GFW/simDHT" target="_blank" rel="noopener">simDHT</a>, 它是老太太的杰作, 简单又简洁。<br>它最先解决了怎么才能高效的认识其他节点，也就是改变发送的 id。id 的高位也就是最前面的影响最大，距离越远。</p>
+</li>
+<li><p><a href="https://github.com/whtsky/maga" target="_blank" rel="noopener">maga</a>, 这是最近发现的，它使用了 <code>asyncio</code>, 非常高效，代码也<br>很简洁，推荐看一下。</p>
+</li>
+</ul>
+<h2 id="种子信息的抓取"><a href="#种子信息的抓取" class="headerlink" title="种子信息的抓取"></a>种子信息的抓取</h2><h3 id="dht-网络抓取"><a href="#dht-网络抓取" class="headerlink" title="dht 网络抓取"></a>dht 网络抓取</h3><p>这种方法不会受限于人，它根据<code>bittorrent</code>协议去下载信息。优点是全，稳, 缺点就是慢.<br>如果直接根据 <code>announce_peer</code> 去下载，有很多 peer 连不上，有很多 peer 自己都还没下载完成。</p>
+<h3 id="其他提供者抓取"><a href="#其他提供者抓取" class="headerlink" title="其他提供者抓取"></a>其他提供者抓取</h3><p>这种方法就是去抓像迅雷这样的提供者.优点是快，缺点是不全，要看它们的脸色.</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><h3 id="ip-和端口的解析"><a href="#ip-和端口的解析" class="headerlink" title="ip 和端口的解析"></a>ip 和端口的解析</h3><p><code>ip</code> 4 个字节，怎么转成 ‘192.168.1.1’ 这样，用 <code>socket.inet_ntoa</code>,半路出家的坑啊。</p>
+<h3 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h3><p>写爬虫完全不需要</p>
+<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p>像 <code>maga</code> 那样，效率太高了，<code>cpu</code> 和 网络占用太多。 给它定个限制，一分钟只能发多少个包，<br>超过的直接就不发了，因为是爬虫，丢包没影响。</p>
+<h3 id="文件名解码"><a href="#文件名解码" class="headerlink" title="文件名解码"></a>文件名解码</h3><p>绝大多数可以用 <code>utf8</code> 解码，出错在用 <code>gb18030</code>, 剩下的就难搞了，只能丢掉了。</p>
+<h1 id="爬虫架构"><a href="#爬虫架构" class="headerlink" title="爬虫架构"></a>爬虫架构</h1><p><img src="/assert/2016-06-02-bt-crawler-system.PNG" alt="bt-crawler-system"></p>
+<ol>
+<li><code>infohash</code> 抓取用 <code>maga</code> 改的</li>
+<li><code>metadata</code> 抓取用 迅雷的地址</li>
+<li><code>infohash</code> 传递用 <code>rabbitmq</code> 和 <code>celery</code></li>
+<li>数据库用 <code>mongodb</code>, 全文搜索就不好搞， 可以考虑用 <code>elasticsearch</code>.</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dht/" rel="tag"># dht</a>
+          
+            <a href="/tags/bt/" rel="tag"># bt</a>
+          
+            <a href="/tags/crawler/" rel="tag"># crawler</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/03/chinese-word-segmentation/" rel="next" title="中文分词">
+                <i class="fa fa-chevron-left"></i> 中文分词
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/17/hexo-to-docker/" rel="prev" title="转移hexo到docker">
+                转移hexo到docker <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">dust8</p>
+              <p class="site-description motion-element" itemprop="description">读书百遍其义自见</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dust8" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.the5fire.com/" title="the5fire" target="_blank">the5fire</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术表"><span class="nav-number">2.</span> <span class="nav-text">技术表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-编码"><span class="nav-number">2.1.</span> <span class="nav-text">B 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方的库"><span class="nav-number">2.1.1.</span> <span class="nav-text">官方的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非官方的库"><span class="nav-number">2.1.2.</span> <span class="nav-text">非官方的库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#infohash-的抓取"><span class="nav-number">2.2.</span> <span class="nav-text">infohash 的抓取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方的-bootstrap-dht"><span class="nav-number">2.2.1.</span> <span class="nav-text">官方的 bootstrap-dht</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非官方的"><span class="nav-number">2.2.2.</span> <span class="nav-text">非官方的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#种子信息的抓取"><span class="nav-number">2.3.</span> <span class="nav-text">种子信息的抓取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dht-网络抓取"><span class="nav-number">2.3.1.</span> <span class="nav-text">dht 网络抓取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他提供者抓取"><span class="nav-number">2.3.2.</span> <span class="nav-text">其他提供者抓取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">2.4.</span> <span class="nav-text">坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-和端口的解析"><span class="nav-number">2.4.1.</span> <span class="nav-text">ip 和端口的解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由表"><span class="nav-number">2.4.2.</span> <span class="nav-text">路由表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效率"><span class="nav-number">2.4.3.</span> <span class="nav-text">效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件名解码"><span class="nav-number">2.4.4.</span> <span class="nav-text">文件名解码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫架构"><span class="nav-number">3.</span> <span class="nav-text">爬虫架构</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dust8</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
